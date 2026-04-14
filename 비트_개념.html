@@ -84,7 +84,6 @@
             font-size: 0.75rem; font-weight: 800; letter-spacing: 0.5px;
         }
         
-        /* 💡 타이틀 클릭 시 홈으로 이동 */
         .main-title { font-size: 1.4rem; font-weight: 900; margin: 0; letter-spacing: -0.02em; color: var(--text-main); cursor: pointer; transition: color 0.2s; }
         .main-title:hover { 
             background: linear-gradient(135deg, var(--teal-main) 0%, var(--gold-light) 100%);
@@ -173,7 +172,7 @@
         .step-container.active { display: flex; opacity: 1; transform: translateX(0); }
 
         /* ========================================================= */
-        /* ⭐ Step 1 회로도 동적 이미지 CSS (청록&골드 테마 이식) ⭐ */
+        /* ⭐ Step 1 회로도 동적 이미지 CSS (비트 개념 전용) ⭐ */
         /* ========================================================= */
         .visual-container {
             width: 100%; border-radius: 22px; margin-bottom: 10px; 
@@ -232,7 +231,6 @@
         /* ⭐ 아코디언, 버튼, 그리고 "튀어나온 박스" 애니메이션 CSS ⭐ */
         /* ========================================================= */
         
-        /* 🔥 새로 추가된 팝업 박스(그림자 박스) 효과 */
         .revealed-text {
             display: inline-block;
             background: #ffffff;
@@ -336,7 +334,7 @@
             vertical-align: middle; 
         }
 
-        /* ⭐ 사이드바 - 고급스러운 딥 청록(Teal) 글래스모피즘 완벽 적용 */
+        /* ⭐ 사이드바 - 가치 개념 파일과 완벽하게 동일한 맑은 파스텔 민트 유리 질감 */
         .sidebar-right { 
             width: 360px; display: flex; flex-direction: column; flex-shrink: 0; 
             padding: 30px 0 35px 20px; 
@@ -345,62 +343,63 @@
         }
         
         .memo-section, .reflection-section { 
-            /* 🔥 깊고 진한 청록색 베이스 오버레이 (초록색 추가) */
-            background: linear-gradient(135deg, rgba(15, 118, 110, 0.9) 0%, rgba(13, 148, 136, 0.75) 100%); 
-            /* 💧 블러 강도 대폭 완화 (블러 삭제/축소) */
-            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            /* 연한 민트에서 흰색으로 이어지는 반투명 그라데이션 */
+            background: linear-gradient(135deg, rgba(204, 251, 241, 0.65) 0%, rgba(255, 255, 255, 0.8) 100%); 
+            /* 강한 블러 유지 */
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border-radius: 28px 0 0 28px; 
-            border: 1px solid rgba(255, 255, 255, 0.2); /* 은은한 테두리 */
+            /* 부드러운 반투명 테두리 */
+            border: 1px solid rgba(255, 255, 255, 0.7); 
             border-right: none; 
             padding: 25px 30px 25px 25px; 
             display: flex; flex-direction: column; 
-            box-shadow: inset 2px 2px 8px rgba(255,255,255,0.1), -10px 10px 30px rgba(15, 118, 110, 0.15); 
+            /* 입체감을 주는 그림자 */
+            box-shadow: inset 2px 2px 8px rgba(255,255,255,0.6), -10px 10px 30px rgba(15, 118, 110, 0.08); 
         }
         
         .memo-section { flex: 0.55; }
         .reflection-section { flex: 0.45; }
         
-        /* 🔥 제목 색상: 배경이 어두워졌으므로 밝게 수정 */
+        /* 제목 (다크 네이비/블랙, 900 두께) */
         .sidebar-title {
             font-weight: 900; 
-            color: #f8fafc; 
+            color: #1e1e2f; 
             margin-bottom: 12px; 
             font-size: 1.05rem;
         }
 
         .memo-area { 
-            flex: 1; border: none; background: transparent; resize: none; font-size: 0.95rem; line-height: 1.8; outline: none; 
-            /* 🔥 가로선: 어두운 배경에 맞춘 은은한 밝은 선 */
-            background-image: linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px); 
+            flex: 1; border: none; background: transparent; resize: none; 
+            font-size: 0.95rem; line-height: 1.8; outline: none; 
+            /* 연한 청록색 줄무늬 */
+            background-image: linear-gradient(rgba(15, 118, 110, 0.25) 1px, transparent 1px); 
             background-size: 100% 1.8rem; cursor: text !important; font-family: 'Pretendard', sans-serif;
-            /* 🔥 글자색: 밝은 Off-white */
-            color: #f8fafc; font-weight: 600; 
+            /* 본문 텍스트 (다크 그레이/블랙) */
+            color: #1d1d1f; 
         }
-        .reflection-area { 
-            flex: 1; border: 1px solid rgba(255,255,255,0.3); border-radius: 14px; 
-            /* 🔥 깊은 청록색 배경 */
-            background: rgba(255,255,255,0.1); 
-            resize: none; padding: 15px; font-size: 0.9rem; line-height: 1.6; outline: none; margin-bottom: 12px; cursor: text !important; font-family: 'Pretendard', sans-serif; 
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
-            transition: 0.3s; 
-            /* 🔥 글자색: 밝은 Off-white */
-            font-weight: 600; color: #f8fafc;
-        }
-        /* 🔥 포커스 시 테두리와 배경색 조정 */
-        .reflection-area:focus { background: rgba(255,255,255,0.2); border-color: var(--gold-light); box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3); }
-
-        /* 🔥 팁 박스: 다크 모드 스타일로 반전 */
-        .capture-tip { 
-            font-size: 0.75rem; color: var(--gold-light); font-weight: 800; background: rgba(0,0,0,0.2); 
-            padding: 8px; border-radius: 10px; border: 1px dashed var(--gold-light); text-align: center; 
-        }
-
-        /* ⭐ 메모장 및 소감문 안내 문구(플레이스홀더) 색상 수정 */
         .memo-area::placeholder, 
         .reflection-area::placeholder {
-            /* 밝은 회색 플레이스홀더 */
-            color: #e2e8f0; 
-            opacity: 0.8; 
+            /* 선명한 밝은 회색 플레이스홀더 */
+            color: #94a3b8; 
+            opacity: 1; 
+        }
+        
+        .reflection-area { 
+            flex: 1; border: 1px solid rgba(255,255,255,0.8); border-radius: 14px; 
+            /* 반투명한 흰색 박스 배경 */
+            background: rgba(255,255,255,0.7); 
+            resize: none; padding: 15px; font-size: 0.9rem; line-height: 1.6; outline: none; margin-bottom: 12px; cursor: text !important; font-family: 'Pretendard', sans-serif; 
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+            transition: 0.3s; 
+            /* 본문 텍스트 (다크 그레이/블랙) */
+            color: #1d1d1f;
+        }
+        /* 포커스 효과 (청록 테두리) */
+        .reflection-area:focus { background: rgba(255,255,255,0.9); border-color: var(--teal-main); box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15); }
+        
+        .capture-tip { 
+            font-size: 0.75rem; color: var(--teal-main); font-weight: 800; background: rgba(255,255,255,0.7); 
+            padding: 8px; border-radius: 10px; border: 1px dashed var(--teal-light); text-align: center; 
         }
 
         footer { padding: 15px 40px; background: rgba(255,255,255,0.5); color: var(--apple-gray); border-top: 1px solid rgba(0,0,0,0.05); font-size: 0.8rem; font-weight: 600; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; }
