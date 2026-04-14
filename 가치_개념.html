@@ -100,7 +100,7 @@
         .status-btn.btn-help { color: var(--apple-red); border-color: rgba(255,45,85,0.2); }
         .status-btn.btn-done { color: var(--success-green); border-color: rgba(16, 185, 129, 0.2); }
 
-        /* ⭐ 모던한 네비게이션 메뉴 */
+        /* ⭐ 모던한 네비게이션 메뉴 (패턴 통일) */
         nav { margin-top: 15px; display: flex; justify-content: center; gap: 4px; padding-bottom: 0; position: relative; width: 100%; }
         .menu-item { position: relative; display: inline-block; }
         .menu-link {
@@ -115,15 +115,16 @@
         }
         
         .menu-link.active { 
-            background-color: var(--card-white) !important; color: var(--teal-main) !important; 
+            background-color: var(--menu-active-bg) !important; color: var(--teal-main) !important; 
             font-weight: 900 !important; border-color: rgba(0,0,0,0.05);
             box-shadow: 0 -4px 12px rgba(15, 118, 110, 0.08) !important; 
         }
 
         .dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: white; border-radius: 0 0 14px 14px; min-width: 150px; display: none; list-style: none; padding: 10px 0; margin: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 6000; border: 1px solid rgba(0,0,0,0.05); }
         .menu-item:hover .dropdown { display: block !important; }
+        
         .dropdown li a { display: block; padding: 10px 15px; color: var(--text-main); text-decoration: none; font-size: 0.8rem; text-align: center; font-weight: 700; transition: 0.2s;}
-        .dropdown li a:hover { background: var(--menu-active-bg); color: var(--teal-main); }
+        .dropdown li a:hover { background: var(--menu-active-bg); color: var(--teal-main); font-weight: 900; }
 
         main { flex: 1; display: flex; overflow: hidden; position: relative; z-index: 1000; width: 100%; }
         
@@ -352,20 +353,24 @@
 
         /* 퀴즈 영역 */
         .word-score-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px; width: 100%; }
+        .inline-tip { background: white; color: var(--teal-main); border: 1.5px solid var(--teal-main); padding: 8px 16px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; cursor: pointer !important; transition: 0.2s; }
+        .inline-tip:hover { background: var(--teal-main); color: white; }
         .word-bank { background: #f0fdfa; border: 1px solid rgba(15, 118, 110, 0.2); padding: 15px 25px; border-radius: 18px; display: flex; gap: 15px; flex: 1; justify-content: center; flex-wrap: wrap; }
-        .word-item { background: white; padding: 6px 16px; border-radius: 10px; font-weight: 800; color: var(--teal-main); font-size: 0.95rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.05); cursor: grab !important; transition: 0.2s;}
+        
+        .word-item { background: white; padding: 6px 16px; border-radius: 10px; font-weight: 900; color: var(--teal-main); font-size: 0.95rem; border: 1px solid rgba(15, 118, 110, 0.1); box-shadow: 0 4px 6px rgba(0,0,0,0.02); cursor: grab !important; transition: 0.2s;}
         .word-item:hover { transform: translateY(-2px); box-shadow: 0 6px 10px rgba(15, 118, 110, 0.15); border-color: var(--teal-main); }
+        .word-item:active { cursor: grabbing !important; }
         
         #scoreBoard { background: var(--teal-main); color: white; padding: 10px 20px; border-radius: 15px; font-weight: 900; min-width: 120px; text-align: center; box-shadow: 0 4px 10px rgba(15, 118, 110, 0.3);}
 
-        .quiz-box { font-size: 1.05rem; line-height: 2.2; color: var(--text-main); font-weight: 600; background: #fafafa; padding: 25px 30px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); margin-bottom: 15px; text-align: left; transition: 0.3s; }
+        .quiz-box { font-size: 1.05rem; line-height: 2.2; color: var(--text-main); font-weight: 700; background: #fafafa; padding: 25px 30px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); margin-bottom: 15px; text-align: left; transition: 0.3s; }
         .quiz-box:hover { background: white; border-color: rgba(15, 118, 110, 0.2); box-shadow: 0 5px 15px rgba(15, 118, 110, 0.05); }
         
         .blank { 
             box-sizing: border-box; display: inline-block; width: 110px; height: 38px; 
             background: white; border: 2px dashed rgba(15, 118, 110, 0.4); 
             border-radius: 8px; vertical-align: middle; padding: 0 5px;
-            text-align: center; line-height: 34px; font-size: 1.05rem; font-weight: 800; color: var(--teal-main); 
+            text-align: center; line-height: 34px; font-size: 1.05rem; font-weight: 900; color: var(--teal-main); 
             margin: 0 6px; transition: all 0.2s ease; cursor: text !important; outline: none;
         }
         .blank:focus { border-color: var(--teal-main); box-shadow: 0 0 8px rgba(15, 118, 110, 0.2); width: 120px; }
@@ -382,7 +387,7 @@
             vertical-align: middle; 
         }
 
-        /* ⭐ 사이드바 - 소리 개념 파일과 동일한 구조/투명도에 색상만 청록(Teal)으로 변경 */
+        /* ⭐ 사이드바 - 분석된 가치 파일 느낌의 아주 맑은 파스텔 민트 유리 질감 이식 */
         .sidebar-right { 
             width: 360px; display: flex; flex-direction: column; flex-shrink: 0; 
             padding: 30px 0 35px 20px; 
@@ -391,7 +396,7 @@
         }
         
         .memo-section, .reflection-section { 
-            /* 가치 테마에 맞는 연한 청록색 반투명 그라데이션 */
+            /* 가치 파일과 완벽히 동일한 연한 민트/파스텔 그라데이션 */
             background: linear-gradient(135deg, rgba(204, 251, 241, 0.65) 0%, rgba(255, 255, 255, 0.8) 100%); 
             backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border-radius: 28px 0 0 28px; 
@@ -405,19 +410,39 @@
         .memo-section { flex: 0.55; }
         .reflection-section { flex: 0.45; }
         
-        .memo-area { 
-            flex: 1; border: none; background: transparent; resize: none; font-size: 0.95rem; line-height: 1.8; outline: none; 
-            background-image: linear-gradient(rgba(15, 118, 110, 0.25) 1px, transparent 1px); /* 진해진 배경에 맞춰 줄무늬 약간 더 선명하게 */
-            background-size: 100% 1.8rem; cursor: text !important; font-family: 'Pretendard', sans-serif;
-            color: #1d1d1f;
-        }
-        .reflection-area { 
-            flex: 1; border: 1px solid rgba(255,255,255,0.9); border-radius: 14px; background: rgba(255,255,255,0.7); 
-            resize: none; padding: 15px; font-size: 0.9rem; line-height: 1.6; outline: none; margin-bottom: 12px; cursor: text !important; font-family: 'Pretendard', sans-serif; 
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
-            transition: 0.3s;
+        /* 제목 (소리 파일 스타일: #1e1e2f 다크 네이비, 900) */
+        .sidebar-title {
+            font-weight: 900; 
+            color: #1e1e2f; 
+            margin-bottom: 12px; 
+            font-size: 1.05rem;
         }
 
+        .memo-area { 
+            flex: 1; border: none; background: transparent; resize: none; 
+            font-size: 0.95rem; line-height: 1.8; outline: none; 
+            /* 은은한 가로선 유지 (청록색 계열) */
+            background-image: linear-gradient(rgba(15, 118, 110, 0.25) 1px, transparent 1px); 
+            background-size: 100% 1.8rem; cursor: text !important; font-family: 'Pretendard', sans-serif;
+            /* 텍스트 (소리 파일 스타일: #1d1d1f 딥 그레이/블랙) */
+            color: #1d1d1f; 
+        }
+        .memo-area::placeholder, 
+        .reflection-area::placeholder {
+            color: #94a3b8; /* 밝은 회색 플레이스홀더 */
+            opacity: 1; 
+        }
+        
+        .reflection-area { 
+            flex: 1; border: 1px solid rgba(255,255,255,0.8); border-radius: 14px; 
+            background: rgba(255,255,255,0.5); 
+            resize: none; padding: 15px; font-size: 0.9rem; line-height: 1.6; outline: none; margin-bottom: 12px; cursor: text !important; font-family: 'Pretendard', sans-serif; 
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+            transition: 0.3s; 
+            /* 텍스트 (소리 파일 스타일: #1d1d1f) */
+            color: #1d1d1f;
+        }
+        .reflection-area:focus { background: rgba(255,255,255,0.9); border-color: var(--teal-main); box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15); }
         
         .capture-tip { 
             font-size: 0.75rem; color: var(--teal-main); font-weight: 800; background: rgba(255,255,255,0.7); 
@@ -449,7 +474,7 @@
             <div class="menu-item">
                 <span class="menu-link active">디지털 데이터의 가치</span>
                 <ul class="dropdown">
-                    <li><a href="가치_개념.html" style="background:#ccfbf1; color:#0f766e; font-weight:900;">📖 개념 탐구</a></li>
+                    <li><a href="가치_개념.html">📖 개념 탐구</a></li>
                     <li><a href="가치_활용실습.html">🛠️ 활용 실습</a></li>
                 </ul>
             </div>
@@ -688,11 +713,11 @@
 
         <aside class="sidebar-right">
             <div class="memo-section">
-                <div style="font-weight:900; color:#1e1e2f; margin-bottom:12px; font-size:1.05rem;">📌 학습 메모장</div>
+                <div class="sidebar-title">📌 학습 메모장</div>
                 <textarea class="memo-area" placeholder="중요한 내용을 기록하세요. 궁금한 사항은 기록하고 질문하세요."></textarea>
             </div>
             <div class="reflection-section">
-                <div style="font-weight:900; color:#1e1e2f; margin-bottom:12px; font-size:1.05rem;">🌿 학습 활동 소감</div>
+                <div class="sidebar-title">🌿 학습 활동 소감</div>
                 <textarea class="reflection-area" placeholder="새롭게 알게된 사실과 느낀점을 기록하세요."></textarea>
                 <div class="capture-tip">📸 캡처: Win+Shift+S | Mac: Cmd+Shift+4</div>
             </div>
@@ -732,7 +757,6 @@
             }
         }
 
-        // 색상 기본값을 청록색으로 변경
         function revealInline(btn, text, color = 'var(--teal-main)') {
             const span = document.createElement('span');
             span.style.color = color;
@@ -870,9 +894,9 @@
                 arrow.querySelector('div').innerText = '전체 단계별 지도 보기';
             }
         }
-window.onload = function() {
+        
+        window.onload = function() {
             const wordBank = document.querySelector('.word-bank');
-            // 자식 요소(word-item)들을 무작위 순서로 다시 배치합니다.
             for (let i = wordBank.children.length; i >= 0; i--) {
                 wordBank.appendChild(wordBank.children[Math.random() * i | 0]);
             }
