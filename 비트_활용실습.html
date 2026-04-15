@@ -23,13 +23,18 @@
         height: 100vh;
     }
 
-    /* 모달 및 공통 UI */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    /* 공통 모달 UI */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 2000; }
     .modal-box { background: linear-gradient(135deg, #111, #1a1a2e); border: 1px solid var(--neon-blue); border-radius: 20px; padding: 40px; max-width: 600px; box-shadow: 0 0 30px rgba(0, 242, 254, 0.3); text-align: center; }
     .modal-box h2 { font-family: 'Orbitron', sans-serif; color: var(--neon-blue); font-size: 28px; margin-top: 0; margin-bottom: 20px; letter-spacing: 2px; }
     .modal-box ul { text-align: left; color: #ccc; font-size: 16px; line-height: 1.8; padding-left: 20px; margin-bottom: 30px; }
     .modal-box li b { color: white; }
     
+    /* 커스텀 경고 팝업 전용 스타일 */
+    .alert-box { border-color: var(--neon-red); box-shadow: 0 0 30px rgba(255, 8, 68, 0.3); max-width: 400px; padding: 30px; }
+    .alert-box h2 { color: var(--neon-yellow); font-size: 24px; font-family: 'Pretendard', sans-serif; margin-bottom: 15px; font-weight: 900; }
+    .alert-message { color: white; font-size: 16px; line-height: 1.6; margin-bottom: 25px; word-break: keep-all; }
+
     .start-btn { background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); color: #000; font-weight: 900; font-size: 18px; padding: 12px 40px; border: none; border-radius: 30px; cursor: pointer; transition: 0.3s; }
     .start-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 242, 254, 0.6); }
     
@@ -56,24 +61,20 @@
     
     .next-btn { margin-top: 40px; padding: 12px 30px; font-size: 16px; font-weight: 700; color: white; background: transparent; border: 2px solid white; border-radius: 8px; cursor: pointer; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 50; } .next-btn.show { opacity: 1; pointer-events: auto; } .next-btn:hover { background: white; color: black; }
     
-    /* --- ✨ Stage 4: 고급 SVG 네트워크 연출 CSS ✨ --- */
+    /* --- Stage 4: 고급 SVG 네트워크 연출 CSS --- */
     .network-container { position: relative; width: 600px; height: 400px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
 
-    /* SVG 아이콘 공통 속성 */
     .svg-icon { width: 100%; height: 100%; fill: currentColor; }
 
-    /* 중앙 빅데이터 코어 */
     .data-core { width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%; box-shadow: 0 0 30px var(--neon-blue), inset 0 0 20px var(--neon-purple); border: 2px solid var(--neon-blue); position: relative; z-index: 10; transition: all 1.5s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; align-items: center; justify-content: center; color: var(--neon-blue); }
     .data-core svg { width: 40px; height: 40px; }
     
     .data-core.expand { width: 160px; height: 160px; box-shadow: 0 0 100px var(--neon-blue), 0 0 150px var(--neon-purple); background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); color: white; border: none; font-family: 'Orbitron'; font-size: 24px; font-weight: 900; }
-    .data-core.expand svg { display: none; } /* 코어 확장 시 텍스트로 전환하기 위함 */
+    .data-core.expand svg { display: none; }
 
-    /* 주변에서 모여드는 데이터 소스 아이콘 */
     .source-icon { position: absolute; width: 40px; height: 40px; color: #fff; opacity: 1; transition: all 1.2s ease-in-out; z-index: 5; text-align: center; filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)); }
     .source-icon.absorb { top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) scale(0.1); opacity: 0; filter: blur(5px); color: var(--neon-blue); }
 
-    /* 뻗어나가는 광케이블 선 (오류 수정됨) */
     .optic-line { 
         position: absolute; 
         top: 50%; 
@@ -86,23 +87,20 @@
         transform-origin: 0 50%; 
         transition: width 1s ease-out, opacity 1s ease-out; 
         opacity: 0; 
-        margin-top: -1.5px; /* 정확한 중앙 정렬 */
+        margin-top: -1.5px;
     }
     .line-top-left { transform: rotate(-148deg); }
     .line-top-right { transform: rotate(-32deg); }
     .line-bottom-left { transform: rotate(148deg); }
     .line-bottom-right { transform: rotate(32deg); }
-    .optic-line.shoot { opacity: 1; width: 315px; } /* 네모 박스의 정중앙까지 도달하는 길이 */
+    .optic-line.shoot { opacity: 1; width: 315px; }
 
-    /* 세상의 변화 노드 (스마트시티 등) */
     .world-node { position: absolute; width: 90px; height: 90px; background: rgba(0,0,0,0.8); border: 2px solid #333; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: all 0.5s ease-out; transform: scale(0.5); z-index: 5; color: #555; }
     .world-node .icon { width: 35px; height: 35px; margin-bottom: 8px; transition: 0.5s; }
     .world-node .label { font-size: 11px; font-weight: bold; font-family: 'Pretendard'; white-space: nowrap; text-align: center; line-height: 1.3; transition: 0.5s;}
 
-    /* 노드 활성화 상태 */
     .world-node.active { opacity: 1; transform: scale(1); border-color: var(--neon-yellow); background: rgba(252, 226, 5, 0.1); box-shadow: 0 0 30px rgba(252, 226, 5, 0.4); color: var(--neon-yellow); }
 
-    /* 노드 고정 위치 */
     .node-tl { top: -10px; left: -10px; }
     .node-tr { top: -10px; right: -10px; }
     .node-bl { bottom: -10px; left: -10px; }
@@ -159,7 +157,7 @@
 <div id="manual-modal" class="modal-overlay">
     <div class="modal-box">
         <h2>📖 체험 설명서</h2>
-        <p style="color:white; font-size:18px; margin-bottom: 20px;">단 1개의 비트가 모여 거대한 <빅데이터>가 되는 과정을 체험하세요.</p>
+        <p style="color:white; font-size:18px; margin-bottom: 20px;">단 1개의 비트가 모여 거대한 &lt;빅데이터&gt;가 되는 과정을 체험하세요.</p>
         <ul>
             <li><b>1단계 (1 Bit):</b> 스페이스바를 눌러 스위치를 켭니다.</li>
             <li><b>2단계 (1 Byte):</b> 숫자 <b>0과 1</b>을 8번 눌러 문자를 창조합니다.</li>
@@ -167,6 +165,14 @@
             <li><b>최종 단계:</b> 두 컴퓨터를 연결하는 <b style="color:var(--neon-blue);">[광통신 네트워크]</b> 수신기가 되어보는 체험을 합니다!</li>
         </ul>
         <button class="start-btn" onclick="startGame()">체험 시스템 가동</button>
+    </div>
+</div>
+
+<div id="custom-alert-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-box alert-box">
+        <h2 id="alert-title">⚠️ 시스템 경고</h2>
+        <p id="alert-message" class="alert-message"></p>
+        <button class="start-btn" style="padding: 10px 30px; font-size: 16px;" onclick="closeCustomAlert()">확인</button>
     </div>
 </div>
 
@@ -279,7 +285,7 @@
                 
                 <div style="width: 80%; text-align: left;">
                     <select id="msg-select" class="neon-select" style="margin-top: 10px; margin-bottom: 5px;">
-                         <option>*** 메시지 선택 ***</option>
+                         <option value="">*** 메시지 선택 ***</option>
                         <option value="0">I LOVE YOU (10글자)</option>
                         <option value="1">BE HAPPY! (9글자)</option>
                         <option value="2">GOOD LUCK! (10글자)</option>
@@ -288,7 +294,7 @@
                     </select>
                     
                     <select id="speed-select" class="neon-select" style="margin-top: 5px; margin-bottom: 20px;">
-        		<option>*** 데이터 전송 속도 선택 ***</option>
+                        <option value="">*** 데이터 전송 속도 선택 ***</option>
                         <option value="2.5">데이터 전송 속도: 느림 🐢</option>
                         <option value="4.0">데이터 전송 속도: 보통 🏃</option>
                         <option value="6.0">데이터 전송 속도: 빠름 🚀</option>
@@ -333,6 +339,18 @@
 </div>
 
 <script>
+    // --- 커스텀 알림(Alert) 모달 로직 ---
+    function showCustomAlert(title, message) {
+        document.getElementById('alert-title').innerText = title;
+        document.getElementById('alert-message').innerHTML = message;
+        document.getElementById('custom-alert-modal').style.display = 'flex';
+    }
+
+    function closeCustomAlert() {
+        document.getElementById('custom-alert-modal').style.display = 'none';
+    }
+
+
     let currentStage = 0;
 
     function startGame() {
@@ -453,13 +471,11 @@
         const orb = document.getElementById('core-orb');
 
         if (evolutionStep === 0) {
-            // STEP 1: 데이터 융합 (아이콘 빨아들이기 & 코어 팽창)
             textEl.style.opacity = 0;
             setTimeout(() => {
                 textEl.innerHTML = "문자, 이미지, 동영상의 무수히 많은 0과 1이 융합되어<br><b style='color:var(--neon-purple); font-size:24px;'>'빅데이터(BIG DATA)'</b>로 거대하게 진화했습니다!";
                 textEl.style.opacity = 1;
                 
-                // SVG 아이콘들이 이진수로 변하며 흡수됨
                 for(let i=1; i<=4; i++) {
                     let src = document.getElementById('src' + i);
                     src.innerHTML = "0110"; 
@@ -469,7 +485,6 @@
                     src.classList.add('absorb');
                 }
 
-                // 코어 팽창
                 setTimeout(() => {
                     orb.classList.add('expand');
                     orb.innerHTML = "BIG DATA<br><span style='font-size:12px; font-weight:normal; letter-spacing:1px;'>1,000,000,000 Bits</span>";
@@ -480,16 +495,13 @@
             evolutionStep++;
         }
         else if (evolutionStep === 1) {
-            // STEP 2: 세상과 연결 (광케이블 발사 & 노드 켜짐)
             textEl.style.opacity = 0;
             setTimeout(() => {
                 textEl.innerHTML = "이 거대한 데이터는 <b>'광케이블망'</b>을 타고 전 세계로 퍼져<br><b style='color:var(--neon-yellow);'>스마트시티와 자율주행, AI를 움직이며 세상을 변화시킵니다.</b>";
                 textEl.style.opacity = 1;
                 
-                // 선 발사
                 document.querySelectorAll('.optic-line').forEach(line => line.classList.add('shoot'));
                 
-                // 노드 점등
                 setTimeout(() => {
                     document.querySelectorAll('.world-node').forEach(node => node.classList.add('active'));
                 }, 500);
@@ -504,7 +516,6 @@
             evolutionStep++;
         }
         else if (evolutionStep === 2) {
-            // STEP 3: 네트워크 통신 게임 진입
             document.getElementById('header').style.opacity = 1;
             goStage(5);
         }
@@ -557,9 +568,14 @@
 
     function startCountdown() {
         let selectEl = document.getElementById('msg-select');
-        selectedSentence = SENTENCES[selectEl.value];
-        
         let speedEl = document.getElementById('speed-select');
+
+        if (selectEl.value === "" || speedEl.value === "") {
+            showCustomAlert("⚠️ 시스템 경고", "통신을 시작하기 전에 <b>'메시지'</b>와 <b>'데이터 전송 속도'</b>를<br>모두 선택해주세요!");
+            return;
+        }
+
+        selectedSentence = SENTENCES[selectEl.value];
         bitSpeed = parseFloat(speedEl.value);
 
         totalPlayableChars = selectedSentence.replace(/[ !?.]/g, "").length;
@@ -705,16 +721,29 @@
             
             b.x += bitSpeed; 
 
-            if (b.x > player.x - player.radius) {
-                b.processed = true;
+            // 🔥 난이도 완화 업데이트: 수신기의 "앞쪽 테두리"부터 "중앙" 사이에 있을 때 판정 🔥
+            if (b.x >= player.x - player.radius && b.x <= player.x) {
+                // 비트가 수신기 영역 안에 있을 때, 방향이 맞으면 '즉시 흡수(성공)' 처리!
                 if (playerState === b.value) { 
+                    b.processed = true;
                     collectedBits.push(b.value.toString()); 
                     score += 10; updateScoreUI(); 
-                    createHitEffect(player.x, trackY[playerState], true); 
-                } else { 
-                    collectedBits.push('X'); 
-                    createHitEffect(player.x, trackY[playerState], false); 
+                    
+                    // 성공 이펙트는 비트가 닿은 위치 부근에서 자연스럽게 발생
+                    createHitEffect(b.x, trackY[playerState], true); 
+                    
+                    updateBitProgressUI();
+                    if (b.index === 7) { setTimeout(evaluateChar, 100); }
                 }
+            } 
+            // 중앙을 넘어갈 때까지 올바른 방향으로 맞추지 못했다면 '실패' 처리
+            else if (b.x > player.x) {
+                b.processed = true;
+                collectedBits.push('X'); 
+                
+                // 실패 이펙트는 놓쳐버린 비트의 원래 높이(b.y)에서 발생하여 혼동 방지
+                createHitEffect(player.x, b.y, false); 
+                
                 updateBitProgressUI();
                 if (b.index === 7) { setTimeout(evaluateChar, 100); }
             }
