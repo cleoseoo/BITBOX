@@ -9,6 +9,7 @@
         :root {
             --multi-violet: #6c5ce7;
             --multi-violet-light: #a29bfe;
+            --multi-violet-dark: #4527a0;
             --multi-orange: #fdcb6e;
             --multi-pink: #ff7675;
             
@@ -114,7 +115,6 @@
         .dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: white; border-radius: 0 0 14px 14px; min-width: 150px; display: none; list-style: none; padding: 10px 0; margin: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 6000; border: 1px solid rgba(0,0,0,0.05); }
         .menu-item:hover .dropdown { display: block !important; }
         
-        /* ⭐ 수정된 부분: 하위 메뉴 마우스 오버 시에만 색상과 굵은 글씨 적용 */
         .dropdown li a { display: block; padding: 10px 15px; color: var(--text-main); text-decoration: none; font-size: 0.8rem; text-align: center; font-weight: 700; transition: 0.2s;}
         .dropdown li a:hover { background: var(--menu-active-bg); color: var(--menu-active-text); font-weight: 900; }
 
@@ -150,7 +150,7 @@
         .step-container { width: 100%; transition: opacity 0.4s ease, transform 0.4s ease; display: none; opacity: 0; transform: translateX(20px); flex: 1; flex-direction: column; }
         .step-container.active { display: flex; opacity: 1; transform: translateX(0); }
 
-        /* 1단계: 캔버스 및 시각자료 (⭐ 핑크톤 슬라이드 배경 적용) */
+        /* 1단계: 캔버스 및 시각자료 */
         .slide-section { 
             background: linear-gradient(135deg, #fff5f7 0%, #ffe4e6 100%); 
             border-radius: 22px; 
@@ -252,23 +252,6 @@
         .vector-control-row { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 0.95rem; color: #495057; width: 100%; }
         .vector-control-row input[type=range] { flex: 1; margin: 0 15px 0 10px; }
 
-        /* ⭐ 6단계 (기존 3단계): 퀴즈 영역 */
-        .word-score-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px; width: 100%; }
-        .word-bank { background: var(--lavender-tip-bg); border: 1px solid rgba(108, 92, 231, 0.2); padding: 15px 25px; border-radius: 18px; display: flex; gap: 15px; flex: 1; justify-content: center; flex-wrap: wrap; }
-        .word-item { background: white; padding: 6px 16px; border-radius: 10px; font-weight: 800; color: var(--multi-violet); font-size: 0.95rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.05); cursor: grab !important; transition: 0.2s;}
-        .word-item:hover { transform: translateY(-2px); box-shadow: 0 6px 10px rgba(0,0,0,0.05); }
-        .word-item:active { cursor: grabbing !important; }
-        
-        .score-board { background: var(--apple-red); color: white; padding: 12px 28px; border-radius: 18px; font-weight: 900; font-size: 1.3rem; min-width: 140px; text-align: center; box-shadow: 0 6px 15px rgba(255,45,85,0.3); transition: transform 0.2s; flex-shrink: 0; }
-        .score-board.pulse { transform: scale(1.15); box-shadow: 0 10px 25px rgba(255,45,85,0.5); }
-
-        .quiz-box { font-size: 1.05rem; line-height: 2.3; color: var(--text-main); font-weight: 600; background: #fafafa; padding: 25px 30px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); margin-bottom: 15px; text-align: left; transition: 0.3s;}
-        .quiz-box:hover { background: white; border-color: rgba(108, 92, 231, 0.15); box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
-        
-        .blank { box-sizing: border-box; display: inline-block; width: 105px; height: 38px; background: white; border: 2px dashed rgba(108, 92, 231, 0.4); border-radius: 10px; vertical-align: middle; padding: 0 5px; text-align: center; line-height: 34px; font-size: 1.05rem; font-weight: 800; color: var(--multi-violet); margin: 0 6px; transition: all 0.2s ease; cursor: text !important; outline: none; }
-        .blank:focus { border-color: var(--multi-violet); box-shadow: 0 0 8px rgba(108, 92, 231, 0.2); width: 115px;}
-        .blank.correct { background: #e8f5e9; color: var(--success-green); border: 2px solid var(--success-green); box-shadow: none; pointer-events: none; }
-
         /* 네비게이션 화살표 */
         .step-navigation { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 25px; padding-top: 20px; border-top: 1px dashed rgba(0,0,0,0.1); }
         .nav-arrow { display: inline-flex; align-items: center; gap: 8px; color: var(--multi-violet); font-weight: 900; font-size: 1.05rem; cursor: pointer !important; transition: 0.2s; padding: 10px 15px; border-radius: 12px; }
@@ -301,6 +284,20 @@
         .memo-section { flex: 0.55; }
         .reflection-section { flex: 0.45; }
         
+        .sidebar-title {
+            font-weight: 900; 
+            color: #1e1e2f; 
+            margin-bottom: 12px; 
+            font-size: 1.05rem;
+        }
+
+        .memo-area::placeholder, 
+        .reflection-area::placeholder {
+            color: #64748b;
+            font-weight: 400; 
+            opacity: 1; 
+        }
+
         .memo-area { 
             flex: 1; border: none; background: transparent; resize: none; font-size: 0.95rem; line-height: 1.8; outline: none; 
             background-image: linear-gradient(rgba(108, 92, 231, 0.25) 1px, transparent 1px); 
@@ -320,9 +317,72 @@
         }
 
         footer { padding: 15px 40px; background: rgba(255,255,255,0.5); color: var(--apple-gray); border-top: 1px solid rgba(0,0,0,0.05); font-size: 0.8rem; font-weight: 600; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* ⭐ 모달 오버레이 */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--overlay); backdrop-filter: blur(8px); z-index: 9000; align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 40px; border-radius: 28px; width: 480px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.15); animation: popUp 0.3s ease-out;}
+        
+        /* 팝업 가로폭 680px 적용 */
+        .modal-content { background: white; padding: 40px; border-radius: 28px; width: 680px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.15); animation: popUp 0.3s ease-out;}
         @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* ⭐ 커스텀 에러 알림창 전용 스타일 ⭐ */
+        .alert-box { background: white; border-radius: 28px; border-color: var(--apple-red) !important; width: 400px; box-shadow: 0 0 30px rgba(239, 68, 68, 0.3) !important; padding: 30px; text-align: center;}
+        .alert-box h3 { color: var(--apple-red); font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; font-weight: 900; }
+        .alert-message { color: var(--text-main); font-size: 1.05rem; line-height: 1.6; margin-bottom: 25px; word-break: keep-all; font-weight: 600; }
+
+        /* ⭐ 미션 가이드 버튼 (네모 -> 라운드 애니메이션 적용) ⭐ */
+        .inline-tip { 
+            background: white; color: var(--multi-violet); border: 2px solid var(--multi-violet); 
+            padding: 8px 20px; border-radius: 8px; font-weight: 900; font-size: 0.95rem; 
+            cursor: pointer !important; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .inline-tip:hover { 
+            background: var(--multi-violet); color: white; border-radius: 24px; 
+            box-shadow: 0 6px 15px rgba(108, 92, 231, 0.3); transform: translateY(-2px);
+        }
+
+        /* ⭐ 퀴즈 영역 타이머 및 버튼 스타일 업데이트 ⭐ */
+        .quiz-controls-row { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 25px; }
+        .quiz-timer { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 900; color: var(--multi-violet); background: #f8f6ff; border: 2px solid var(--multi-violet); padding: 8px 18px; border-radius: 14px; box-shadow: inset 0 2px 5px rgba(108, 92, 231, 0.1); }
+        
+        .start-quiz-btn { background: var(--multi-violet); color: white; border: none; border-radius: 14px; padding: 10px 24px; font-size: 1.1rem; font-weight: 900; cursor: pointer !important; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3); transition: 0.2s; }
+        .start-quiz-btn:hover { transform: translateY(-2px); background: var(--multi-violet-dark); box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4); }
+
+        .reset-timer-btn { background: white; color: var(--apple-red); border: 2px solid var(--apple-red); border-radius: 14px; padding: 10px 20px; font-size: 1.05rem; font-weight: 900; cursor: pointer !important; transition: 0.2s; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.15); }
+        .reset-timer-btn:hover { background: #fef2f2; transform: translateY(-2px); }
+
+        .submit-quiz-btn { background: var(--success-green); color: white; border: none; border-radius: 14px; padding: 15px 40px; font-size: 1.2rem; font-weight: 900; cursor: pointer !important; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: 0.2s; margin-top: 20px; display: inline-block;}
+        .submit-quiz-btn:hover { transform: translateY(-2px); background: #059669; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); }
+
+        .word-score-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px; width: 100%; }
+        .word-bank { background: var(--lavender-tip-bg); border: 1px solid rgba(108, 92, 231, 0.2); padding: 15px 25px; border-radius: 18px; display: flex; gap: 15px; flex: 1; justify-content: center; flex-wrap: wrap; transition: 0.3s; }
+        .word-item { background: white; padding: 6px 16px; border-radius: 10px; font-weight: 800; color: var(--multi-violet); font-size: 0.95rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.05); transition: 0.2s;}
+        
+        .quiz-active .word-item { cursor: grab !important; }
+        .quiz-active .word-item:hover { transform: translateY(-2px); box-shadow: 0 6px 10px rgba(108, 92, 231, 0.15); border-color: var(--multi-violet); }
+        .quiz-active .word-item:active { cursor: grabbing !important; }
+
+        .quiz-box { font-size: 1.05rem; line-height: 2.3; color: var(--text-main); font-weight: 600; background: #fafafa; padding: 25px 30px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); margin-bottom: 15px; text-align: left; transition: 0.3s;}
+        .quiz-box:hover { background: white; border-color: rgba(108, 92, 231, 0.15); box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+        
+        .blank { box-sizing: border-box; display: inline-block; width: 105px; height: 38px; background: white; border: 2px dashed rgba(108, 92, 231, 0.4); border-radius: 10px; vertical-align: middle; padding: 0 5px; text-align: center; line-height: 34px; font-size: 1.05rem; font-weight: 800; color: var(--multi-violet); margin: 0 6px; transition: all 0.2s ease; outline: none; }
+        .quiz-active .blank { cursor: text !important; }
+        .quiz-active .blank:focus { border-color: var(--multi-violet); box-shadow: 0 0 8px rgba(108, 92, 231, 0.2); width: 115px;}
+        .blank.correct { background: #e8f5e9; color: var(--success-green); border: 2px solid var(--success-green); box-shadow: none; pointer-events: none; }
+        .blank:disabled { opacity: 1; cursor: default !important; }
+
+        /* 📄 리포트 버튼 스타일 */
+        .report-btn {
+            background: linear-gradient(135deg, var(--multi-violet), var(--multi-violet-light));
+            color: white !important; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            margin-left: auto;
+        }
+        .report-btn div { color: white !important; }
+        .report-btn:hover {
+            background: linear-gradient(135deg, var(--multi-violet-dark), var(--multi-violet));
+            color: white; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -334,7 +394,7 @@
                 <h1 class="main-title" onclick="location.href='index.html'">데이터 비트박스</h1>
             </div>
             <div class="status-controller">
-                <button class="status-btn" onclick="resetStatus()">🔄 초기화</button>
+                <button class="status-btn" onclick="setStatus('normal')">🔄 초기화</button>
                 <button class="status-btn btn-help" onclick="setStatus('help')">🙋‍♂️ SOS 요청</button>
                 <button class="status-btn btn-done" onclick="setStatus('done')">✅ 미션 완료</button>
             </div>
@@ -643,8 +703,20 @@
                 <div id="step6-quiz" class="step-container">
                     <div style="font-size: 1.3rem; font-weight: 900; color: var(--apple-red); margin-bottom: 25px;">🎯 최종 퀴즈: 이미지의 디지털 표현 마스터하기!</div>
 
-                    <div class="word-score-container">
-                        <div class="word-bank">
+                    <div class="quiz-controls-row">
+                        <div class="inline-tip" onclick="openTipPopup()">
+                            <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px; height:18px;"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
+                            미션 가이드
+                        </div>
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <div id="quizTimer" class="quiz-timer">⏱️ 00:00</div>
+                            <button id="startQuizBtn" class="start-quiz-btn" onclick="startQuizTimer()">▶️ 퀴즈 시작</button>
+                            <button id="resetTimerBtn" class="reset-timer-btn" onclick="resetQuiz()">🔄 타이머 초기화</button>
+                        </div>
+                    </div>
+
+                    <div class="word-score-container" style="margin-bottom: 20px;">
+                        <div class="word-bank" id="wordBank" style="opacity: 0.4; pointer-events: none;">
                             <div class="word-item" draggable="true" ondragstart="drag(event)">픽셀</div>
                             <div class="word-item" draggable="true" ondragstart="drag(event)">비트맵</div>
                             <div class="word-item" draggable="true" ondragstart="drag(event)">벡터</div>
@@ -652,20 +724,29 @@
                             <div class="word-item" draggable="true" ondragstart="drag(event)">계단 현상</div>
                             <div class="word-item" draggable="true" ondragstart="drag(event)">RGB</div>
                         </div>
-                        <div id="scoreBoard" class="score-board">SCORE: <span id="currentScore">0</span></div>
                     </div>
 
-                    <div class="quiz-box">1. 디지털 화면을 구성하는 가장 작은 사각형 점 단위를 <input type="text" class="blank" data-answer="픽셀" oninput="checkAns(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off"> (이)라고 합니다.</div>
-                    <div class="quiz-box">2. 픽셀들을 격자 모양으로 나열하여 이미지를 표현하는 방식을 <input type="text" class="blank" data-answer="비트맵" oninput="checkAns(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off"> (이)라고 합니다.</div>
-                    <div class="quiz-box">3. 비트맵 방식을 무리하게 확대했을 때 모서리가 울퉁불퉁하게 깨져 보이는 것을 <input type="text" class="blank" data-answer="계단 현상" oninput="checkAns(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off"> (이)라고 합니다.</div>
-                    <div class="quiz-box">4. 수학적 좌표와 방정식으로 그려져 아무리 확대해도 선이 절대 깨지지 않는 방식은 <input type="text" class="blank" data-answer="벡터" oninput="checkAns(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off"> 입니다.</div>
-                    <div class="quiz-box">5. 하나의 이미지가 얼마나 많은 픽셀로 이루어져 있는지를 나타내는 정밀도를 <input type="text" class="blank" data-answer="해상도" oninput="checkAns(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off"> (이)라고 합니다.</div>
-                    <div class="quiz-box" style="margin-bottom:0;">6. 컴퓨터는 빛의 삼원색인 <input type="text" class="blank" data-answer="RGB" oninput="checkAns(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off"> (Red, Green, Blue)를 조합하여 수백만 가지의 색을 만들어냅니다.</div>
+                    <div id="quizForm">
+                        <div class="quiz-box">1. 디지털 화면을 구성하는 가장 작은 사각형 점 단위를 <input type="text" class="blank" data-answer="픽셀" data-score="15" oninput="check(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off" disabled> (이)라고 합니다. <span style="color:var(--apple-red); font-weight:900;">[15점]</span></div>
+                        <div class="quiz-box">2. 픽셀들을 격자 모양으로 나열하여 이미지를 표현하는 방식을 <input type="text" class="blank" data-answer="비트맵" data-score="15" oninput="check(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off" disabled> (이)라고 합니다. <span style="color:var(--apple-red); font-weight:900;">[15점]</span></div>
+                        <div class="quiz-box">3. 비트맵 방식을 무리하게 확대했을 때 모서리가 울퉁불퉁하게 깨져 보이는 것을 <input type="text" class="blank" data-answer="계단 현상" data-score="15" oninput="check(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off" disabled> (이)라고 합니다. <span style="color:var(--apple-red); font-weight:900;">[15점]</span></div>
+                        <div class="quiz-box">4. 수학적 좌표와 방정식으로 그려져 아무리 확대해도 선이 절대 깨지지 않는 방식은 <input type="text" class="blank" data-answer="벡터" data-score="15" oninput="check(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off" disabled> 입니다. <span style="color:var(--apple-red); font-weight:900;">[15점]</span></div>
+                        <div class="quiz-box">5. 하나의 이미지가 얼마나 많은 픽셀로 이루어져 있는지를 나타내는 정밀도를 <input type="text" class="blank" data-answer="해상도" data-score="20" oninput="check(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off" disabled> (이)라고 합니다. <span style="color:var(--apple-red); font-weight:900;">[20점]</span></div>
+                        <div class="quiz-box" style="margin-bottom:0;">6. 컴퓨터는 빛의 삼원색인 <input type="text" class="blank" data-answer="RGB" data-score="20" oninput="check(this)" ondrop="drop(event)" ondragover="allowDrop(event)" autocomplete="off" disabled> (Red, Green, Blue)를 조합하여 수백만 가지의 색을 만들어냅니다. <span style="color:var(--apple-red); font-weight:900;">[20점]</span></div>
+                    </div>
+
+                    <div style="text-align: center; display: none;" id="submitQuizBtnWrap">
+                        <button class="submit-quiz-btn" onclick="submitQuiz()">✅ 미션 완료 및 채점하기</button>
+                    </div>
 
                     <div class="step-navigation">
-                        <div class="nav-arrow prev" onclick="goStep('step5-vector')">
+                        <div class="nav-arrow prev" onclick="goStep('step6-quiz', 'step5-vector')">
                             <svg viewBox="0 0 24 24"><path d="M14 7l-5 5 5 5V7z"/></svg>
                             <div>이전 (벡터 실습)</div>
+                        </div>
+                        
+                        <div class="nav-arrow report-btn" onclick="downloadReportHTML()">
+                            <div>📄 수업 결과 리포트 저장</div>
                         </div>
                     </div>
                 </div>
@@ -676,22 +757,26 @@
         <aside class="sidebar-right">
             <div class="memo-section">
                 <div style="font-weight:900; color:#1e1e2f; margin-bottom:12px; font-size:1.05rem;">📌 학습 메모장</div>
-                <textarea class="memo-area" placeholder="중요한 내용을 기록하세요. 궁금한 사항은 기록하고 질문하세요."></textarea>
+                <textarea id="memoInput" class="memo-area" placeholder="중요한 내용을 기록하세요. 궁금한 사항은 기록하고 질문하세요."></textarea>
             </div>
             <div class="reflection-section">
                 <div style="font-weight:900; color:#1e1e2f; margin-bottom:12px; font-size:1.05rem;">🌿 학습 활동 소감</div>
-                <textarea class="reflection-area" placeholder="새롭게 알게된 사실과 느낀점을 기록하세요."></textarea>
+                <textarea id="reflectionInput" class="reflection-area" placeholder="새롭게 알게된 사실과 느낀점을 기록하세요."></textarea>
                 <div class="capture-tip">📸 캡처: Win+Shift+S | Mac: Cmd+Shift+4</div>
             </div>
         </aside>
     </main>
 
     <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content">
-            <div style="font-size:3.5rem; margin-bottom:15px;">🖼️✅</div>
-            <h2 style="color:var(--multi-violet); margin-bottom: 15px; font-weight: 900;">탐구 완료!</h2>
-            <p style="color: #424245; line-height: 1.6; margin-bottom: 25px;">픽셀과 해상도, 비트 심도부터 벡터의 원리까지 완벽히 이해했습니다!<br>우측 상단의 '미션 완료'를 누르고 선생님께 알려주세요.</p>
-            <button onclick="closeModal()" style="width:100%; padding:14px; background:var(--multi-violet); color:white; border:none; border-radius:12px; font-weight:700; cursor:pointer !important;">확인</button>
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+    
+    <div class="modal-overlay" id="customAlertModal" style="z-index: 9999;">
+        <div class="modal-box alert-box">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🚫</div>
+            <h3 id="alertTitle" style="color: var(--apple-red); font-weight: 900; font-size: 1.5rem; margin-top: 0; margin-bottom: 15px;">접근 거부!</h3>
+            <p id="alertMessage" class="alert-message"></p>
+            <button onclick="closeCustomAlert()" style="width: 100%; padding: 12px; background: var(--apple-red); color: white; border: none; border-radius: 12px; font-weight: 900; font-size: 1.1rem; cursor: pointer;">확인</button>
         </div>
     </div>
 
@@ -701,10 +786,26 @@
     </footer>
 
     <script>
-        // --- 0. 보안 및 공통 스크립트 ---
+        function setStatus(status) {
+            document.body.className = ''; 
+            if(status === 'help') document.body.classList.add('status-help');
+            if(status === 'done') document.body.classList.add('status-done');
+        }
+
         const today = new Date().getDate(); 
         const secretCode = today.toString(2); 
         
+        // ⭐ 커스텀 알림(Alert) 로직 
+        function showCustomAlert(title, message) {
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertMessage').innerHTML = message;
+            document.getElementById('customAlertModal').style.display = 'flex';
+        }
+        function closeCustomAlert() {
+            document.getElementById('customAlertModal').style.display = 'none';
+            document.getElementById('lockInput').focus();
+        }
+
         function checkPassword() {
             const inputVal = document.getElementById('lockInput').value.trim();
             if(inputVal === secretCode) {
@@ -712,23 +813,12 @@
                 overlay.style.opacity = '0';
                 setTimeout(() => { overlay.style.display = 'none'; document.getElementById('lockInput').blur(); }, 500); 
             } else {
-                alert(`접근 거부! 힌트: 오늘 날짜(${today}일)를 이진수로 변환해 보세요.`);
+                showCustomAlert("접근 거부!", `힌트: 오늘 날짜(${today}일)를 이진수로 변환해 보세요.`);
                 document.getElementById('lockInput').value = '';
-                document.getElementById('lockInput').focus();
             }
         }
 
-        function resetStatus() {
-            document.body.className = ''; 
-        }
-
-        function setStatus(status) {
-            document.body.className = ''; 
-            if(status === 'help') document.body.classList.add('status-help');
-            if(status === 'done') document.body.classList.add('status-done');
-        }
-
-        // 스텝 이동 (순서 재배치 적용 완료)
+        // 스텝 이동
         function goStep(id) {
             const current = document.querySelector('.step-container.active');
             const next = document.getElementById(id);
@@ -736,7 +826,6 @@
 
             current.style.opacity = '0'; 
             
-            // 클래스명(step1, step2...) 안의 숫자로 진행 방향 체크
             const currentNum = parseInt(current.id.match(/\d+/)[0]);
             const nextNum = parseInt(id.match(/\d+/)[0]);
             
@@ -762,14 +851,9 @@
 
         function revealInline(btn, text, color = 'var(--multi-violet)') {
             const span = document.createElement('span');
-            span.className = 'pop-anim';
+            span.className = 'pop-anim revealed-text';
             span.style.color = color;
             span.style.fontWeight = '900';
-            span.style.fontSize = '1.05rem';
-            span.style.backgroundColor = 'white'; 
-            span.style.padding = '2px 8px';
-            span.style.borderRadius = '8px';
-            span.style.boxShadow = `0 2px 5px ${color}40`; 
             span.innerText = text;
             btn.parentNode.replaceChild(span, btn);
         }
@@ -1047,17 +1131,6 @@
             updateResultCanvas();
         }
 
-        const gridContainer = document.getElementById('gridContainer');
-        gridContainer.addEventListener('touchmove', (e) => {
-            e.preventDefault(); 
-            const touch = e.touches[0];
-            const cell = document.elementFromPoint(touch.clientX, touch.clientY);
-            if(cell && cell.classList.contains('draw-cell')) {
-                const hex = document.getElementById('colorPicker').value;
-                cell.style.background = hex; gridData[cell.dataset.index] = hex; updateResultCanvas();
-            }
-        }, {passive: false});
-
         function updateResultCanvas() {
             const resCanvas = document.getElementById('resultCanvas');
             const rCtx = resCanvas.getContext('2d');
@@ -1192,7 +1265,6 @@
             circle.setAttribute('r', r);
             circle.setAttribute('fill', color);
 
-            // 실시간 HTML 코드 뷰어 업데이트
             document.getElementById('vecCode').innerHTML = 
                 `&lt;svg width="200" height="200"&gt;<br>` +
                 `&nbsp;&nbsp;&lt;circle <br>` +
@@ -1208,53 +1280,222 @@
             const z = document.getElementById('vecZoom').value;
             document.getElementById('vecZoomText').innerText = `현재 확대 배율: ${z}x`;
             
-            // 줌 비율에 맞춰 viewBox 크기를 축소하여, 수학적으로 완벽한 벡터 확대 구현 (해상도 저하 없음)
             const w = 200 / z;
             const h = 200 / z;
-            // 항상 중심(100, 100)을 기준으로 줌 인
             const x = 100 - w/2; 
             const y = 100 - h/2;
             
             document.getElementById('vectorSvg').setAttribute('viewBox', `${x} ${y} ${w} ${h}`);
         }
 
-        // --- 6단계: 최종 퀴즈 ---
-        let score = 0; const scored = new Set();
-        function checkAns(el) {
+        // ⭐ 6단계 퀴즈 타이머 및 진행 로직 ⭐
+        let timerInterval;
+        let elapsedSeconds = 0;
+        let isQuizStarted = false;
+        let score = 0;
+        let correctAnswers = 0; 
+        const totalQuestions = 6; 
+        const scored = new Set();
+
+        function startQuizTimer() {
+            isQuizStarted = true;
+            document.getElementById('startQuizBtn').style.display = 'none';
+            document.getElementById('submitQuizBtnWrap').style.display = 'block';
+            
+            document.getElementById('wordBank').style.opacity = '1';
+            document.getElementById('wordBank').style.pointerEvents = 'auto';
+            document.getElementById('quizForm').classList.add('quiz-active');
+            document.querySelectorAll('.blank').forEach(el => {
+                if(!el.classList.contains('correct')) el.disabled = false;
+            });
+
+            timerInterval = setInterval(() => {
+                elapsedSeconds++;
+                const m = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
+                const s = String(elapsedSeconds % 60).padStart(2, '0');
+                document.getElementById('quizTimer').innerText = `⏱️ ${m}:${s}`;
+            }, 1000);
+        }
+
+        function resetQuiz() {
+            clearInterval(timerInterval);
+            elapsedSeconds = 0;
+            document.getElementById('quizTimer').innerText = '⏱️ 00:00';
+            isQuizStarted = false;
+            score = 0;
+            correctAnswers = 0;
+            scored.clear();
+
+            document.querySelectorAll('.blank').forEach(el => {
+                el.value = '';
+                el.classList.remove('correct');
+                el.disabled = true;
+            });
+
+            document.getElementById('startQuizBtn').style.display = 'inline-block';
+            document.getElementById('submitQuizBtnWrap').style.display = 'none';
+            document.getElementById('wordBank').style.opacity = '0.4';
+            document.getElementById('wordBank').style.pointerEvents = 'none';
+            document.getElementById('quizForm').classList.remove('quiz-active');
+        }
+
+        function check(el) {
+            if (!isQuizStarted) return; 
             if (el.value.trim() === el.getAttribute('data-answer') && !scored.has(el)) {
-                el.classList.add('correct'); el.disabled = true; scored.add(el);
-                score += 16.6667; 
-                let dScore = Math.round(score); if(dScore >= 99) dScore = 100;
-                document.getElementById('currentScore').innerText = dScore;
-
-                // 점수판 애니메이션
-                const sb = document.getElementById('scoreBoard');
-                sb.classList.add('pulse');
-                setTimeout(() => { sb.classList.remove('pulse'); }, 300);
-
-                if(dScore === 100) { 
-                    setTimeout(() => {
-                        document.getElementById('modalOverlay').style.display = 'flex'; setStatus('done'); 
-                    }, 500);
-                }
+                el.classList.add('correct');
+                el.disabled = true; 
+                scored.add(el);
+                
+                score += parseInt(el.getAttribute('data-score'));
+                correctAnswers++;
             }
         }
-        function drag(ev) { ev.dataTransfer.setData("text", ev.target.innerText); }
-        function allowDrop(ev) { ev.preventDefault(); }
-        function drop(ev) { ev.preventDefault(); ev.target.value = ev.dataTransfer.getData("text"); checkAns(ev.target); }
+
+        function submitQuiz() {
+            if(!isQuizStarted) return;
+            clearInterval(timerInterval); 
+            showSuccess();
+        }
+
+        function allowDrop(ev) { if(isQuizStarted) ev.preventDefault(); }
+        function drag(ev) { if(isQuizStarted) ev.dataTransfer.setData("text", ev.target.innerText); }
+        function drop(ev) {
+            if(!isQuizStarted) return;
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            ev.target.value = data;
+            check(ev.target);
+        }
+
+        function openTipPopup() {
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <h3 style="color:var(--multi-violet);">💡 미션 가이드</h3>
+                <p style="line-height:1.8; text-align:left; padding:0 20px; font-size:1.05rem; word-break:keep-all;">
+                    - <b>[▶️ 퀴즈 시작]</b> 버튼을 누르면 타이머가 켜지고 입력이 가능해집니다.<br>
+                    - 보기 단어를 마우스로 <b>끌어서</b> 빈칸에 넣거나 <b>직접 입력</b>해 보세요.<br>
+                    - 모든 문제를 푼 뒤 화면 하단의 <b>[✅ 미션 완료 및 채점하기]</b> 버튼을 누르면 점수와 시간이 나옵니다.
+                </p>
+                <button onclick="closeModal()" style="width:100%; padding:14px; background:var(--multi-violet); color:white; border:none; border-radius:12px; font-weight:700; font-size:1.1rem; cursor:pointer; margin-top:10px;">확인</button>
+            `;
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+
+        function showSuccess() {
+            const m = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
+            const s = String(elapsedSeconds % 60).padStart(2, '0');
+            const finalScore = score; 
+
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <div style="font-size:3rem; margin-bottom:15px;">🖼️✨</div>
+                <h2 style="color:var(--multi-violet); margin-bottom:15px;">이미지 탐구 완료!</h2>
+                
+                <div style="background:#f8f6ff; border: 1px solid rgba(108, 92, 231, 0.2); padding:15px; border-radius:12px; margin-bottom:20px;">
+                    <p style="margin:5px 0; font-size:1.1rem; font-weight:800;">최종 점수: <span style="color:var(--apple-red); font-size:1.3rem;">${finalScore}점</span></p>
+                    <p style="margin:5px 0; font-size:1.1rem; font-weight:800;">풀이 시간: <span style="color:var(--multi-violet); font-size:1.3rem;">${m}분 ${s}초</span></p>
+                </div>
+
+                <p style="font-size:0.95rem; color:#555; margin-bottom:20px;">픽셀과 해상도, 비트맵과 벡터의 원리를 완벽히 이해했습니다!<br>아래 버튼을 눌러 <b>수업 결과 리포트</b>를 저장하세요.</p>
+                
+                <div style="display:flex; gap:10px;">
+                    <button onclick="downloadReportHTML()" style="flex:1; padding:14px; background:var(--multi-violet); color:white; border:none; border-radius:12px; font-weight:900; cursor:pointer; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);">📄 리포트 저장 (웹문서)</button>
+                    <button onclick="closeModal()" style="padding:14px 20px; background:#e5e5e7; color:#333; border:none; border-radius:12px; font-weight:700; cursor:pointer;">닫기</button>
+                </div>
+            `;
+            document.getElementById('modalOverlay').style.display = 'flex';
+            setStatus('done'); 
+        }
+
         function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
         
-        // ⭐ 버그 수정: 두 개의 onload 함수를 하나로 통합했습니다.
-        window.onload = function() {
-            // 1. 색상 코드표 초기화
-            updateColorBin(); 
+        // ⭐ HTML 양식으로 수업 리포트 다운로드 기능 ⭐
+        function downloadReportHTML() {
+            const finalScore = score;
+            const memo = document.getElementById('memoInput').value || "작성된 내용이 없습니다.";
+            const reflection = document.getElementById('reflectionInput').value || "작성된 내용이 없습니다.";
+            const dateStr = new Date().toLocaleString('ko-KR');
             
-            // 2. 퀴즈 단어 섞기
+            const m = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
+            const s = String(elapsedSeconds % 60).padStart(2, '0');
+            const timeStr = isQuizStarted ? `${m}분 ${s}초` : "측정 불가";
+
+            const htmlContent = `
+            <!DOCTYPE html>
+            <html lang="ko">
+            <head>
+                <meta charset="UTF-8">
+                <title>학습 결과 리포트</title>
+                <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800;900&display=swap" rel="stylesheet">
+                <style>
+                    body { font-family: 'Pretendard', sans-serif; background: #f8f6ff; color: #1d1d1f; padding: 40px; line-height: 1.6; }
+                    .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px 50px; border-radius: 24px; box-shadow: 0 15px 35px rgba(108, 92, 231, 0.1); border: 1px solid rgba(108, 92, 231, 0.2); }
+                    h1 { color: #6c5ce7; text-align: center; border-bottom: 3px solid #a29bfe; padding-bottom: 20px; font-weight: 900; margin-top: 0;}
+                    .info-box { background: #f8fafc; padding: 25px; border-radius: 16px; margin-bottom: 30px; border: 1px dashed #94a3b8; }
+                    .info-box p { margin: 10px 0; font-size: 1.1rem; font-weight: 600; }
+                    .highlight { color: #6c5ce7; font-weight: 900; font-size: 1.2rem;}
+                    .score { color: #ef4444; font-weight: 900; font-size: 1.2rem;}
+                    .section { margin-bottom: 35px; }
+                    .section h2 { color: #4527a0; font-size: 1.3rem; margin-bottom: 12px; font-weight: 800; }
+                    .text-box { background: #f8f6ff; padding: 20px; border-radius: 12px; border: 1px solid #e0e7ff; white-space: pre-wrap; font-size: 1.05rem; font-weight: 600; color: #334155;}
+                    .footer { text-align: center; color: #94a3b8; font-size: 0.9rem; margin-top: 40px; font-weight: 600;}
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>[데이터 비트박스] 학습 결과 리포트 📋</h1>
+                    <div class="info-box">
+                        <p>▶ 단원명: <span class="highlight">5. 이미지의 디지털 표현</span></p>
+                        <p>▶ 일시: <span class="highlight">${dateStr}</span></p>
+                        <p>▶ 퀴즈 점수: <span class="score">${finalScore} 점</span></p>
+                        <p>▶ 퀴즈 풀이 시간: <span class="highlight">${timeStr}</span></p>
+                    </div>
+                    <div class="section">
+                        <h2>📌 학습 메모장</h2>
+                        <div class="text-box">${memo}</div>
+                    </div>
+                    <div class="section">
+                        <h2>🌿 학습 활동 소감</h2>
+                        <div class="text-box">${reflection}</div>
+                    </div>
+                    <div class="footer">본 리포트는 '데이터 비트박스' 시스템에서 자동 생성되었습니다.</div>
+                </div>
+            </body>
+            </html>
+            `;
+
+            const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "이미지의_디지털표현_학습결과.html";
+            link.click();
+        }
+
+        window.onload = function() {
             const wordBank = document.querySelector('.word-bank');
             if(wordBank) {
                 for (let i = wordBank.children.length; i >= 0; i--) {
                     wordBank.appendChild(wordBank.children[Math.random() * i | 0]);
                 }
+            }
+
+            const memoInput = document.getElementById('memoInput');
+            const reflectionInput = document.getElementById('reflectionInput');
+
+            if(memoInput && reflectionInput) {
+                if(localStorage.getItem('value_image_memo')) {
+                    memoInput.value = localStorage.getItem('value_image_memo');
+                }
+                if(localStorage.getItem('value_image_reflection')) {
+                    reflectionInput.value = localStorage.getItem('value_image_reflection');
+                }
+
+                memoInput.addEventListener('input', function() {
+                    localStorage.setItem('value_image_memo', this.value);
+                });
+                reflectionInput.addEventListener('input', function() {
+                    localStorage.setItem('value_image_reflection', this.value);
+                });
             }
         };
     </script>
