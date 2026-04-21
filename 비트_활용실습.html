@@ -464,7 +464,7 @@
         }
     }
 
-    // ✨ Stage 4: 클릭 시 진행되는 진화 로직 ✨
+ // ✨ Stage 4: 클릭 시 진행되는 진화 로직 ✨
     let evolutionStep = 0;
 
     function stepEvolution() {
@@ -474,8 +474,13 @@
 
         if (evolutionStep === 0) {
             textEl.style.opacity = 0;
+            
+            // 진화가 끝날 때까지 버튼 클릭 방지 및 텍스트 변경
+            btn.style.pointerEvents = "none"; 
+            btn.innerText = "데이터 융합 중... ⏳"; 
+
             setTimeout(() => {
-                textEl.innerHTML = "문자, 이미지, 동영상의 무수히 많은 0과 1이 융합되어<br><b style='color:var(--neon-purple); font-size:24px;'>'빅데이터(BIG DATA)'</b>로 거대하게 진화했습니다!";
+                textEl.innerHTML = "단독으로 존재하던 데이터들이 융합하며 <b style='color:var(--neon-green);'>Byte ➔ KB ➔ MB ➔ GB ➔ TB</b> 단위로 팽창하여<br><b style='color:var(--neon-purple); font-size:24px;'>'빅데이터(BIG DATA)'</b>로 거대하게 진화했습니다!";
                 textEl.style.opacity = 1;
                 
                 for(let i=1; i<=4; i++) {
@@ -488,11 +493,40 @@
                 }
 
                 setTimeout(() => {
+                    // 기본 expand 클래스(배경색, 네온 효과 등) 적용
                     orb.classList.add('expand');
-                    orb.innerHTML = "BIG DATA<br><span style='font-size:12px; font-weight:normal; letter-spacing:1px;'>1,000,000,000 Bits</span>";
-                }, 800);
+                    // ⭐ 수정: 1초 간격의 단계별 성장에 맞춰 부드러운 텐션(애니메이션) 설정
+                    orb.style.transition = "all 1s cubic-bezier(0.25, 0.8, 0.25, 1)";
+                    
+                    // ⭐ 추가: 용량별로 커질 크기(픽셀) 배열 세팅
+                    let units = ["1 Byte", "256 KB", "10 MB", "500 GB", "100 TB"];
+                    let sizes = [100, 130, 160, 190, 220]; 
+                    let step = 0;
+                    
+                    // 1초 간격으로 텍스트와 크기 동시 업데이트
+                    let sizeInterval = setInterval(() => {
+                        if(step < units.length) {
+                            // 크기 키우기
+                            orb.style.width = sizes[step] + "px";
+                            orb.style.height = sizes[step] + "px";
+                            // 텍스트 업데이트
+                            orb.innerHTML = `<span style='font-size:22px; color:var(--neon-yellow); text-shadow:0 0 10px var(--neon-yellow);'>${units[step]}</span>`;
+                            step++;
+                        } else {
+                            clearInterval(sizeInterval);
+                            // 마지막 최종 빅데이터 크기는 가장 거대하게 (260px)
+                            orb.style.width = "260px";
+                            orb.style.height = "260px";
+                            orb.innerHTML = "BIG DATA<br><span style='font-size:12px; font-weight:normal; letter-spacing:1px; color:#ddd;'>1,000,000,000+ Bits</span>";
+                            
+                            // 진화가 완전히 끝나면 버튼을 다시 활성화
+                            btn.style.pointerEvents = "auto";
+                            btn.innerText = "세상과 연결하기";
+                        }
+                    }, 1000);
 
-                btn.innerText = "세상과 연결하기";
+                }, 500);
+
             }, 500);
             evolutionStep++;
         }
