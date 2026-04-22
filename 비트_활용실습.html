@@ -21,6 +21,7 @@
         overflow: hidden; user-select: none;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         height: 100vh;
+        padding-top: 46px;
     }
 
     /* 공통 모달 UI */
@@ -44,7 +45,7 @@
     .header { position: absolute; top: 30px; text-align: center; z-index: 10; transition: opacity 0.5s; display: none; }
     .title { font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 900; background: linear-gradient(to right, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
 
-    .stage { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.8s ease-out; z-index: 5; width: 100vw; height: 100vh; }
+    .stage { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.8s ease-out; z-index: 5; width: 100vw; height: calc(100vh - 46px); }
     .stage.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -153,6 +154,53 @@
 </style>
 </head>
 <body>
+<!-- ✅ DATA BITBOX 공통 네비바 -->
+<style>
+#dbb-topnav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 22px;
+    background: rgba(255,255,255,0.13);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid #14b8a655;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.18);
+    font-family: 'Noto Sans KR','Pretendard','Inter',sans-serif;
+    box-sizing: border-box;
+}
+#dbb-topnav a.dbb-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.3px;
+    text-decoration: none;
+    padding: 6px 14px; border-radius: 20px;
+    border: 1.5px solid #14b8a677;
+    color: #14b8a6;
+    background: rgba(20,184,166,0.12);
+    transition: all 0.18s ease;
+    white-space: nowrap;
+}
+#dbb-topnav a.dbb-btn:hover {
+    background: #14b8a622;
+    border-color: #14b8a6;
+    box-shadow: 0 0 14px #14b8a644;
+    transform: translateY(-1px);
+}
+#dbb-topnav .dbb-title {
+    font-size: 0.78rem; font-weight: 700;
+    color: #14b8a6;
+    letter-spacing: 0.3px;
+    opacity: 0.9;
+}
+
+</style>
+<div id="dbb-topnav">
+    <div style="display:flex;gap:9px;align-items:center;">
+        <a class="dbb-btn" href="index.html">← 메인으로</a>
+        <a class="dbb-btn" href="비트_개념.html">📖 개념으로</a>
+    </div>
+    <span class="dbb-title">🎮 비트(Bit)란? · 활용 실습</span>
+</div>
+<!-- /네비바 -->
+
 
 <div id="manual-modal" class="modal-overlay">
     <div class="modal-box">
