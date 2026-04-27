@@ -2,860 +2,190 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>동물 구출 작전 수행</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>이미지 표현 방식 선택 | DATA BITBOX</title>
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-        
+
         :root {
-            --panel-bg: rgba(255, 255, 255, 0.35); 
-            --accent-blue: #0984e3;
-            --accent-green: #00b894; 
-            --accent-red: #d63031; 
-            --text-main: #2d3436;
-            --text-dim: #636e72; 
-            --glass-border: rgba(255, 255, 255, 0.6);
+            --bg-deep: #050B14;
+            --text-main: #E0F2FE;
         }
 
         * { cursor: default !important; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
 
         body {
-            margin: 0; padding: 0; height: 100vh; 
-            /* 🏞️ 화창한 동물원 풍경 배경 */
-            background: 
-                radial-gradient(circle at 85% 15%, #fff59d 0%, #fff59d 30px, transparent 35px),
-                linear-gradient(to top, #7bed9f 0%, #2ed573 20%, transparent 20%),
-                linear-gradient(to top, #a4b0be 0%, #badc58 20%, #badc58 35%, transparent 35%),
-                linear-gradient(to bottom, #74b9ff 0%, #81ecec 100%);
+            margin: 0; padding: 0; width: 100vw; height: 100vh; 
+            background-color: var(--bg-deep);
             color: var(--text-main); 
-            display: flex; flex-direction: column; overflow: hidden;
-            transition: box-shadow 0.3s ease;
-        padding-top: 46px;
-    }
+            overflow: hidden;
+            display: flex; flex-direction: column;
+        }
 
-        .zoo-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
-        .zoo-bg .clouds { position: absolute; top: 10%; left: 5%; font-size: 4rem; letter-spacing: 12vw; opacity: 0.9; filter: drop-shadow(0 5px 15px rgba(255,255,255,0.8)); }
-        .zoo-bg .trees { position: absolute; bottom: 15%; left: 3%; font-size: 5rem; letter-spacing: 8vw; filter: drop-shadow(0 10px 5px rgba(0,0,0,0.2)); }
-
-        header {
-            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(8px);
-            padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--glass-border);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        /* ==========================================================
+           ✅ DATA BITBOX 공통 네비바 (오른쪽 정렬 적용 완벽 복구)
+           ========================================================== */
+        #dbb-topnav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 9999999;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 9px 22px;
+            background: rgba(18, 12, 30, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            box-sizing: border-box;
         }
         
-        .header-title { font-size: 1.5rem; font-weight: 900; color: #2c3e50; letter-spacing: 2px; display: flex; align-items: center; text-shadow: 0 2px 5px rgba(255,255,255,0.8); }
-        .paw-icon { 
-            font-size: 2.2rem; margin-right: 12px; 
-            background: #fff; border-radius: 50%; padding: 4px;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); 
-            animation: pulse 2s infinite; 
-        }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
-        .btn-group { display: flex; gap: 12px; }
-        .btn-header {
-            padding: 10px 22px; border-radius: 8px; border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.6); color: #2d3436; font-weight: 800; font-size: 0.95rem;
-            transition: all 0.3s ease; cursor: pointer !important; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .btn-header:hover { background: rgba(255,255,255,0.9); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
-        .btn-sos { border-color: var(--accent-red); color: var(--accent-red); }
-        .btn-done { border-color: var(--accent-green); color: #009432; }
-
-        main { flex: 1; display: flex; padding: 25px; gap: 25px; }
-
-        /* 오른쪽 컨트롤 패널에만 불투명 유리 효과 유지 */
-        .control-panel {
-            background: var(--panel-bg); backdrop-filter: blur(12px);
-            border-radius: 20px; border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.5);
-            position: relative; overflow: hidden;
-            flex: 1; padding: 30px; display: flex; flex-direction: column;
+        #dbb-topnav a.dbb-btn {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.3px;
+            text-decoration: none;
+            padding: 6px 14px; border-radius: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            color: #f8fafc;
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.18s ease;
+            white-space: nowrap;
         }
 
-        /* 왼쪽 동물 디스플레이 패널은 완전 투명하게 분리 */
-        .display-panel { 
-            flex: 1.3; display: flex; align-items: center; justify-content: center; padding: 20px;
-            background: transparent; /* 불투명 배경 제거 */
-            backdrop-filter: none;   /* 블러 효과 제거 */
-            border: none;            /* 테두리 제거 */
-            box-shadow: none;        /* 그림자 제거 */
-            position: relative; overflow: hidden; border-radius: 20px; /* 대기 화면 오버레이용 유지 */
-        }
-        /* 🚨 동물 그림 배경 하얀색 제거 -> 완전 투명하게 변경 */
-        .game-area-wrap {
-            position: relative; width: 100%; height: 100%; max-width: 640px; max-height: 480px;
-            background: transparent; border-radius: 12px; overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
-        }
-        /* 캔버스 배경도 투명하게 변경 */
-        canvas { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; background: transparent; display: block; }
-
-        /* 얇은 철장 유지 */
-        .cage-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                repeating-linear-gradient(90deg, transparent, transparent 90px, #4b6584 90px, #4b6584 97px),
-                repeating-linear-gradient(0deg, transparent, transparent 110px, #4b6584 110px, #4b6584 117px);
-            border: 8px solid #4b6584;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
-            z-index: 5; pointer-events: none;
-            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease;
-        }
-        .cage-opened { transform: translateY(-100%); opacity: 0; }
-
-        .hud-score {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(5px);
-            border: 2px solid var(--accent-green); border-radius: 12px;
-            padding: 10px 20px; text-align: right; z-index: 10; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .hud-label { font-size: 0.85rem; color: #636e72; font-weight: 700; margin-bottom: 3px; }
-        .hud-value { font-size: 2rem; font-weight: 900; color: #009432; }
-
-        .overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; text-align: center;
-        }
-        .overlay h1 { color: #2d3436; font-size: 2.5rem; font-weight: 900; margin-bottom: 15px; }
-        .overlay p { color: #636e72; font-size: 1.05rem; font-weight: 600; line-height: 1.6; }
-
-        .status-board { display: flex; gap: 15px; margin-bottom: 15px; }
-        .status-box {
-            flex: 1; background: rgba(255,255,255,0.7); border: 1px solid var(--glass-border);
-            padding: 12px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .status-label { font-size: 0.8rem; color: var(--text-dim); font-weight: 700; margin-bottom: 3px; }
-        .status-value { font-size: 1.6rem; font-weight: 900; }
-
-        .security-alert {
-            background: #ffeaa7; border-left: 4px solid #fdcb6e;
-            padding: 12px; border-radius: 0 8px 8px 0; font-size: 0.85rem; font-weight: 600;
-            color: #d35400; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        #dbb-topnav a.dbb-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
         }
 
-        .slider-group { margin-bottom: 15px; }
-        .slider-header { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.95rem; font-weight: 700; }
-        .val-display { color: var(--accent-blue); font-weight: 900; }
-        .slider-range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-dim); font-weight: 600; margin-top: 4px; }
-
-        input[type=range] { width: 100%; height: 8px; border-radius: 4px; background: rgba(0,0,0,0.1); outline: none; -webkit-appearance: none; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%;
-            background: #fff; border: 3px solid var(--accent-blue); cursor: pointer !important; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        #dbb-topnav .dbb-title {
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+            margin-left: auto; /* ✅ 글자를 오른쪽 끝으로 정렬하는 마법! */
+            font-size: 0.9rem; 
+            font-weight: 800;
+            color: #e9d5ff;
+            letter-spacing: 0.5px;
         }
 
-        .action-area { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
-        .input-box {
-            width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #dfe6e9;
-            background: #fff; color: #2d3436; font-size: 1.2rem; font-weight: 800; text-align: center; transition: all 0.2s ease;
-        }
-        .input-box:focus { border-color: var(--accent-blue); outline: none; box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.2); }
-
-        @keyframes errorShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); background-color: #ff7675; color: white; border-color: var(--accent-red); }
-            75% { transform: translateX(10px); background-color: #ff7675; color: white; border-color: var(--accent-red); }
-        }
-        .error-shake { animation: errorShake 0.4s ease; }
-
-        .btn-submit {
-            padding: 18px; border-radius: 10px; border: none; font-size: 1.2rem; font-weight: 900;
-            background: linear-gradient(135deg, #00b894, #00cec9); color: white; cursor: pointer !important; box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
-        }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 184, 148, 0.6); }
-
-        .sub-btn-group { display: flex; gap: 10px; }
-        .btn-sub {
-            flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: 700;
-            background: rgba(0,0,0,0.05); color: #636e72; font-size: 0.95rem; cursor: pointer !important; transition: 0.2s;
-        }
-        .btn-sub:hover { background: rgba(0,0,0,0.1); }
-        .btn-reset:hover { color: var(--accent-red); background: #ffeaa7; }
-
-        .hidden { display: none !important; }
-        #toast {
-            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
-            background: #009432; color: #fff; padding: 12px 30px; border-radius: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            font-weight: 800; font-size: 1.1rem; opacity: 0; transition: 0.3s; z-index: 2000; text-align: center;
-        }
-    
-        /* ══ 선택 화면 ══ */
+        /* ==========================================================
+           ══ 선택 화면 영역 ══
+           ========================================================== */
         #screen-select {
-            display:none; position:fixed; inset:0; z-index:89000;
-            align-items:center; justify-content:center;
-            background:linear-gradient(135deg,#0a1628 0%,#1a2a4a 50%,#0d2137 100%);
+            display: flex; flex: 1; margin-top: 48px; height: calc(100vh - 48px);
+            align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d2137 100%);
+            position: relative;
         }
         #screen-select::before {
-            content:''; position:absolute; inset:0; pointer-events:none;
-            background:radial-gradient(ellipse at 30% 50%,rgba(0,245,196,0.08) 0%,transparent 60%),
-                        radial-gradient(ellipse at 70% 50%,rgba(10,132,255,0.08) 0%,transparent 60%);
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(ellipse at 30% 50%, rgba(0, 245, 196, 0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 50%, rgba(10, 132, 255, 0.08) 0%, transparent 60%);
         }
-        .sel-wrap { position:relative; z-index:1; text-align:center; padding:40px 20px; }
-        .sel-title { font-size:2.2rem; font-weight:900; color:white; margin-bottom:10px; letter-spacing:-0.02em; }
-        .sel-sub { font-size:1rem; color:rgba(255,255,255,0.45); margin-bottom:52px; font-weight:600; }
-        .sel-cards { display:flex; gap:24px; align-items:stretch; justify-content:center; }
+        .sel-wrap { position: relative; z-index: 1; text-align: center; padding: 40px 20px; }
+        .sel-title { font-size: 2.2rem; font-weight: 900; color: white; margin-bottom: 10px; letter-spacing: -0.02em; }
+        .sel-sub { font-size: 1rem; color: rgba(255, 255, 255, 0.45); margin-bottom: 52px; font-weight: 600; }
+        .sel-cards { display: flex; gap: 24px; align-items: stretch; justify-content: center; }
+        
         .sel-card {
-            width:300px; padding:44px 30px; border-radius:28px;
-            cursor:pointer !important; display:flex; flex-direction:column;
-            align-items:center; gap:14px;
-            transition:transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
+            width: 300px; padding: 44px 30px; border-radius: 28px;
+            cursor: pointer !important; display: flex; flex-direction: column;
+            align-items: center; gap: 14px; text-decoration: none;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s;
         }
-        .sel-bitmap { background:linear-gradient(145deg,#0d2137,#1a3a5c); border:1.5px solid rgba(10,132,255,0.3); }
-        .sel-bitmap:hover { transform:translateY(-14px) scale(1.03); box-shadow:0 30px 60px rgba(10,132,255,0.3); border-color:rgba(10,132,255,0.7); }
-        .sel-vector { background:linear-gradient(145deg,#0d1f0d,#1a3520); border:1.5px solid rgba(0,245,196,0.3); }
-        .sel-vector:hover { transform:translateY(-14px) scale(1.03); box-shadow:0 30px 60px rgba(0,245,196,0.2); border-color:rgba(0,245,196,0.7); }
-        .sel-icon { font-size:3.8rem; line-height:1; }
-        .sel-chip { font-size:0.6rem; font-weight:900; letter-spacing:4px; padding:3px 14px; border-radius:20px; text-transform:uppercase; }
-        .sel-bitmap .sel-chip { background:rgba(10,132,255,0.2); color:#5ac8fa; border:1px solid rgba(10,132,255,0.3); }
-        .sel-vector .sel-chip { background:rgba(0,245,196,0.15); color:#00f5c4; border:1px solid rgba(0,245,196,0.3); }
-        .sel-name { font-size:1.5rem; font-weight:900; color:white; }
-        .sel-desc { font-size:0.85rem; color:rgba(255,255,255,0.55); line-height:1.75; text-align:center; font-weight:600; }
-        .sel-badge { font-size:0.78rem; font-weight:800; padding:7px 20px; border-radius:20px; margin-top:4px; }
-        .sel-bitmap .sel-badge { background:rgba(10,132,255,0.15); color:#5ac8fa; }
-        .sel-vector .sel-badge { background:rgba(0,245,196,0.1); color:#00f5c4; }
-        .sel-go { font-size:0.88rem; font-weight:900; padding:11px 30px; border-radius:20px; margin-top:6px; transition:all 0.2s; }
-        .sel-bitmap .sel-go { background:rgba(10,132,255,0.2); color:#5ac8fa; }
-        .sel-vector .sel-go { background:rgba(0,245,196,0.12); color:#00f5c4; }
-        .sel-bitmap:hover .sel-go { background:#0a84ff; color:white; }
-        .sel-vector:hover .sel-go { background:#00f5c4; color:#0a1628; }
-        .sel-vs { display:flex; align-items:center; justify-content:center; width:60px; flex-shrink:0; font-size:1rem; font-weight:900; color:rgba(255,255,255,0.2); }
+        
+        .sel-bitmap { background: linear-gradient(145deg, #0d2137, #1a3a5c); border: 1.5px solid rgba(10, 132, 255, 0.3); }
+        .sel-bitmap:hover { transform: translateY(-14px) scale(1.03); box-shadow: 0 30px 60px rgba(10, 132, 255, 0.3); border-color: rgba(10, 132, 255, 0.7); }
+        
+        .sel-vector { background: linear-gradient(145deg, #0d1f0d, #1a3520); border: 1.5px solid rgba(0, 245, 196, 0.3); }
+        .sel-vector:hover { transform: translateY(-14px) scale(1.03); box-shadow: 0 30px 60px rgba(0, 245, 196, 0.2); border-color: rgba(0, 245, 196, 0.7); }
 
-        /* ══ 벡터 게임 ══ */
-        #game-vector {
-            display:none; position:fixed; inset:0; z-index:88000;
-            flex-direction:column;
-            background:linear-gradient(135deg,#f8fffe 0%,#e8f5f0 100%);
-        }
-        .vg-topbar {
-            position:fixed; top:0; left:0; right:0; z-index:99999;
-            display:flex; align-items:center; gap:9px; padding:9px 22px;
-            background:rgba(255,255,255,0.92); backdrop-filter:blur(20px);
-            border-bottom:1px solid rgba(45,52,54,0.15);
-            box-shadow:0 2px 20px rgba(0,0,0,0.18); box-sizing:border-box;
-        }
-        .vg-back { display:inline-flex; align-items:center; gap:5px; font-size:0.72rem; font-weight:700; padding:6px 14px; border-radius:20px; border:1.5px solid rgba(45,52,54,0.25); color:#2d3436; background:rgba(45,52,54,0.06); cursor:pointer !important; transition:all 0.18s; }
-        .vg-back:hover { background:rgba(45,52,54,0.12); }
-        .vg-topbar-ttl { font-size:0.78rem; font-weight:700; color:#2d3436; opacity:0.9; }
-        .vg-body { display:flex; margin-top:46px; height:calc(100vh - 46px); overflow:hidden; }
-        .vg-left { width:370px; flex-shrink:0; background:rgba(255,255,255,0.97); border-right:1px solid rgba(0,0,0,0.08); padding:18px; overflow-y:auto; display:flex; flex-direction:column; gap:11px; }
-        .vg-right { flex:1; display:flex; flex-direction:column; gap:14px; padding:18px 22px; overflow-y:auto; }
-        .vg-ttl { font-size:1.05rem; font-weight:900; color:#2d6a4f; }
-        .vg-dsc { font-size:0.83rem; color:#636e72; font-weight:600; line-height:1.55; }
-        .vg-pg-row { display:flex; align-items:center; gap:8px; }
-        .vg-pg-lbl { font-size:0.72rem; font-weight:900; color:#2d6a4f; white-space:nowrap; }
-        .vg-pg-bar { flex:1; height:7px; background:#e0e0e0; border-radius:4px; overflow:hidden; }
-        .vg-pg-fill { height:100%; background:linear-gradient(90deg,#00b894,#00f5c4); border-radius:4px; transition:width 0.5s; width:0%; }
-        .vg-pg-txt { font-size:0.72rem; font-weight:900; color:#2d6a4f; white-space:nowrap; }
-        .vg-sc-row { display:flex; gap:10px; }
-        .vg-sc-box { flex:1; background:#f0fff8; border:1.5px solid rgba(0,184,148,0.2); border-radius:12px; padding:10px; text-align:center; }
-        .vg-sc-num { font-size:1.4rem; font-weight:900; color:#00b894; }
-        .vg-sc-lbl { font-size:0.68rem; color:#636e72; font-weight:700; }
-        .vg-card { background:white; border-radius:14px; padding:16px; border:2px solid rgba(0,184,148,0.2); box-shadow:0 4px 14px rgba(0,184,148,0.07); display:flex; flex-direction:column; gap:11px; }
-        .vg-mlbl { font-size:0.72rem; font-weight:900; color:#00b894; letter-spacing:1px; }
-        .vg-code { background:#1e2d2f; color:#a8ff78; border-radius:10px; padding:13px; font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:1.9; overflow-x:auto; }
-        .vg-blank { display:inline-block; min-width:46px; background:rgba(255,255,255,0.1); border:1.5px dashed rgba(168,255,120,0.5); border-radius:5px; color:#ffd700; font-weight:900; padding:1px 6px; text-align:center; }
-        .vg-ins { display:flex; gap:8px; flex-wrap:wrap; }
-        .vg-in { flex:1; min-width:75px; padding:8px 10px; border:2px solid rgba(0,184,148,0.3); border-radius:8px; font-size:0.9rem; font-weight:800; text-align:center; outline:none; transition:0.2s; cursor:text !important; }
-        .vg-in:focus { border-color:#00b894; box-shadow:0 0 8px rgba(0,184,148,0.2); }
-        .vg-in.ok { background:#e8f5e9; border-color:#00b894; color:#00b894; }
-        .vg-in.ng { background:#ffeaea; border-color:#d63031; animation:vgsh 0.3s; }
-        @keyframes vgsh { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
-        .vg-sub { background:linear-gradient(135deg,#00b894,#00cec9); color:white; border:none; border-radius:10px; padding:10px 18px; font-size:0.92rem; font-weight:900; cursor:pointer !important; transition:0.2s; box-shadow:0 4px 12px rgba(0,184,148,0.3); }
-        .vg-sub:hover { transform:translateY(-2px); }
-        .vg-hr { display:flex; align-items:center; gap:8px; }
-        .vg-hbtn { background:#fff8e1; border:1px solid #ffd700; color:#b8860b; padding:5px 10px; border-radius:8px; font-size:0.75rem; font-weight:800; cursor:pointer !important; }
-        .vg-htxt { font-size:0.78rem; color:#b8860b; font-weight:700; }
-        .vg-res { display:none; background:linear-gradient(135deg,#f0fff8,#e8f5e9); border:2px solid rgba(0,184,148,0.3); border-radius:16px; padding:28px 20px; text-align:center; flex-direction:column; gap:10px; align-items:center; }
-        .vg-ri { font-size:3rem; }
-        .vg-rt { font-size:1.25rem; font-weight:900; color:#2d6a4f; }
-        .vg-rs { font-size:1.8rem; font-weight:900; color:#00b894; }
-        .vg-rm { font-size:0.83rem; color:#636e72; font-weight:600; line-height:1.6; }
-        .vg-cvs-hd { font-size:0.95rem; font-weight:900; color:#2d6a4f; display:flex; align-items:center; gap:8px; }
-        .vg-cvs-tag { background:#2d6a4f; color:white; font-size:0.6rem; font-weight:800; padding:2px 8px; border-radius:10px; letter-spacing:1px; }
-        .vg-svg-box { flex:1; background:white; border-radius:16px; border:2px solid rgba(0,184,148,0.2); box-shadow:0 8px 25px rgba(0,184,148,0.07); overflow:hidden; padding:10px; }
-        .vg-svg-box svg { width:100%; height:auto; display:block; }
-        .vg-znote { text-align:center; font-size:0.72rem; color:#00b894; font-weight:700; padding:6px; }
-        .vg-cmp { display:flex; align-items:center; gap:14px; background:white; border-radius:12px; padding:12px 16px; border:1px solid rgba(0,0,0,0.06); }
-        .vg-cb { flex:1; text-align:center; }
-        .vg-cl { font-size:0.72rem; font-weight:800; color:#636e72; margin-bottom:6px; }
-        .vg-cm { font-weight:900; color:#b2bec3; font-size:1rem; }
-        #vg-bmp { border:2px solid #d63031; border-radius:8px; image-rendering:pixelated; display:block; margin:0 auto; }
-</style>
+        .sel-icon { line-height: 1; display: flex; align-items: center; justify-content: center; }
+        .sel-chip { font-size: 0.6rem; font-weight: 900; letter-spacing: 4px; padding: 3px 14px; border-radius: 20px; text-transform: uppercase; }
+        .sel-bitmap .sel-chip { background: rgba(10, 132, 255, 0.2); color: #5ac8fa; border: 1px solid rgba(10, 132, 255, 0.3); }
+        .sel-vector .sel-chip { background: rgba(0, 245, 196, 0.15); color: #00f5c4; border: 1px solid rgba(0, 245, 196, 0.3); }
+        
+        .sel-name { font-size: 1.5rem; font-weight: 900; color: white; }
+        .sel-desc { font-size: 0.85rem; color: rgba(255, 255, 255, 0.55); line-height: 1.75; text-align: center; font-weight: 600; }
+        .sel-badge { font-size: 0.78rem; font-weight: 800; padding: 7px 20px; border-radius: 20px; margin-top: 4px; }
+        .sel-bitmap .sel-badge { background: rgba(10, 132, 255, 0.15); color: #5ac8fa; }
+        .sel-vector .sel-badge { background: rgba(0, 245, 196, 0.1); color: #00f5c4; }
+        
+        .sel-go { font-size: 0.88rem; font-weight: 900; padding: 11px 30px; border-radius: 20px; margin-top: 6px; transition: all 0.2s; }
+        .sel-bitmap .sel-go { background: rgba(10, 132, 255, 0.2); color: #5ac8fa; }
+        .sel-vector .sel-go { background: rgba(0, 245, 196, 0.12); color: #00f5c4; }
+        .sel-bitmap:hover .sel-go { background: #0a84ff; color: white; }
+        .sel-vector:hover .sel-go { background: #00f5c4; color: #0a1628; }
+        .sel-vs { display: flex; align-items: center; justify-content: center; width: 60px; flex-shrink: 0; font-size: 1rem; font-weight: 900; color: rgba(255, 255, 255, 0.2); }
+    </style>
 </head>
 <body>
-<!-- ══ 선택 화면 ══ -->
-<div id="screen-select" style="display:flex;">
-    <div class="sel-wrap">
-        <div class="sel-title">🖼️ 이미지 표현 방식 실습</div>
-        <div class="sel-sub">어떤 방식으로 이미지를 탐구할까요?</div>
-        <div class="sel-cards">
-            <div class="sel-card sel-bitmap" onclick="enterGame('bitmap')">
-                <div class="sel-icon">🔲</div>
-                <div class="sel-chip">Bitmap</div>
-                <div class="sel-name">비트맵 방식</div>
-                <div class="sel-desc">픽셀과 RGB 채널을 조작해<br>저해상도 이미지 속<br>동물을 구출하세요!</div>
-                <div class="sel-badge">🦁 동물 구출 작전</div>
-                <div class="sel-go">▶ 시작하기</div>
-            </div>
-            <div class="sel-vs">VS</div>
-            <div class="sel-card sel-vector" onclick="enterGame('vector')">
-                <div class="sel-icon">📐</div>
-                <div class="sel-chip">Vector</div>
-                <div class="sel-name">벡터 방식</div>
-                <div class="sel-desc">SVG 좌표 명령어를 완성해<br>우리 반 교실 풍경을<br>그림으로 완성하세요!</div>
-                <div class="sel-badge">🏫 교실 스케치 미션</div>
-                <div class="sel-go">▶ 시작하기</div>
+
+    <div id="dbb-topnav">
+        <div style="display:flex; gap:9px; align-items:center;">
+            <a class="dbb-btn" href="index.html">← 메인으로</a>
+            <a class="dbb-btn" href="이미지_개념.html">📖 개념으로</a>
+        </div>
+        <span class="dbb-title">🖼️ 이미지의 디지털 표현 · 활용 실습</span>
+    </div>
+
+    <div id="screen-select">
+        <div class="sel-wrap">
+            <div class="sel-title">이미지의 디지털 표현 방식 실습</div>
+            <div class="sel-sub">어떤 방식으로 이미지를 탐구할까요?</div>
+            <div class="sel-cards">
+                <a class="sel-card sel-bitmap" href="이미지_비트맵_활용실습.html">
+                    <div class="sel-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="54" y1="54" x2="70" y2="70" stroke="rgba(255,255,255,0.9)" stroke-width="6" stroke-linecap="round"/>
+                            <circle cx="34" cy="34" r="22" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="4"/>
+                            <clipPath id="lens-clip"><circle cx="34" cy="34" r="19"/></clipPath>
+                            <g clip-path="url(#lens-clip)">
+                                <rect x="16" y="16" width="9" height="9" fill="rgba(255,255,255,0.55)" rx="1"/>
+                                <rect x="26" y="16" width="9" height="9" fill="rgba(255,255,255,0.25)" rx="1"/>
+                                <rect x="36" y="16" width="9" height="9" fill="rgba(255,255,255,0.55)" rx="1"/>
+                                <rect x="16" y="26" width="9" height="9" fill="rgba(255,255,255,0.25)" rx="1"/>
+                                <rect x="26" y="26" width="9" height="9" fill="rgba(255,255,255,0.9)" rx="1"/>
+                                <rect x="36" y="26" width="9" height="9" fill="rgba(255,255,255,0.25)" rx="1"/>
+                                <rect x="16" y="36" width="9" height="9" fill="rgba(255,255,255,0.55)" rx="1"/>
+                                <rect x="26" y="36" width="9" height="9" fill="rgba(255,255,255,0.25)" rx="1"/>
+                                <rect x="36" y="36" width="9" height="9" fill="rgba(255,255,255,0.55)" rx="1"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="sel-chip">Bitmap</div>
+                    <div class="sel-name">비트맵 방식</div>
+                    <div class="sel-desc">픽셀과 RGB 채널을 조작해<br>저해상도 이미지 속<br>동물을 구출하세요!</div>
+                    <div class="sel-badge">🦁 비트맵 동물 구출 작전</div>
+                    <div class="sel-go">▶ 시작하기</div>
+                </a>
+
+                <div class="sel-vs">VS</div>
+
+                <a class="sel-card sel-vector" href="이미지_벡터_활용실습.html">
+                    <div class="sel-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="15" y1="65" x2="70" y2="65" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="15" y1="65" x2="15" y2="10" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round"/>
+                            <polyline points="65,61 70,65 65,69" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="11,15 15,10 19,15" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M22 55 C30 20, 50 20, 62 40" fill="none" stroke="rgba(255,255,255,0.95)" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="22" cy="55" r="4.5" fill="rgba(255,255,255,0.95)"/>
+                            <circle cx="42" cy="28" r="4.5" fill="rgba(255,255,255,0.7)"/>
+                            <circle cx="62" cy="40" r="4.5" fill="rgba(255,255,255,0.95)"/>
+                            <line x1="22" y1="55" x2="22" y2="65" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                            <line x1="62" y1="40" x2="62" y2="65" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                            <line x1="15" y1="55" x2="22" y2="55" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                            <line x1="15" y1="40" x2="62" y2="40" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                        </svg>
+                    </div>
+                    <div class="sel-chip">Vector</div>
+                    <div class="sel-name">벡터 방식</div>
+                    <div class="sel-desc">벡터 방식 이미지를 <br> 창의적으로 디자인하고 <br>디지털 코드를 확인하세요!</div>
+                    <div class="sel-badge">🏫 벡터 이미지 스케치 미션</div>
+                    <div class="sel-go">▶ 시작하기</div>
+                </a>
             </div>
         </div>
     </div>
-</div>
-
-<!-- ✅ DATA BITBOX 공통 네비바 -->
-<style>
-#dbb-topnav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 9px 22px;
-    background: rgba(255,255,255,0.13);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(45,52,54,0.15);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.18);
-    font-family: 'Noto Sans KR','Pretendard','Inter',sans-serif;
-    box-sizing: border-box;
-}
-#dbb-topnav a.dbb-btn {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.3px;
-    text-decoration: none;
-    padding: 6px 14px; border-radius: 20px;
-    border: 1.5px solid rgba(45,52,54,0.25);
-    color: #2d3436;
-    background: rgba(45,52,54,0.06);
-    transition: all 0.18s ease;
-    white-space: nowrap;
-}
-#dbb-topnav a.dbb-btn:hover {
-    background: rgba(45,52,54,0.1);
-    border-color: rgba(45,52,54,0.5);
-    box-shadow: 0 0 14px rgba(45,52,54,0.15);
-    transform: translateY(-1px);
-}
-#dbb-topnav .dbb-title {
-    font-size: 0.78rem; font-weight: 700;
-    color: #2d3436;
-    letter-spacing: 0.3px;
-    opacity: 0.9;
-}
-
-</style>
-<div id="dbb-topnav">
-    <div style="display:flex;gap:9px;align-items:center;">
-        <a class="dbb-btn" href="index.html" style="border:1.5px solid rgba(45,52,54,0.25);background:rgba(45,52,54,0.06);color:white;cursor:pointer;">← 메인으로</a>
-        <a class="dbb-btn" href="이미지_개념.html" style="border:1.5px solid rgba(45,52,54,0.25);background:rgba(45,52,54,0.06);color:white;cursor:pointer;">📖 개념으로</a>
-        <button class="dbb-btn" onclick="backToSelect()" style="border:1.5px solid rgba(45,52,54,0.25);background:rgba(45,52,54,0.06);color:white;cursor:pointer;">🎮 선택으로</button>
-    </div>
-    <span class="dbb-title">🎮 이미지의 표현 · 활용 실습</span>
-</div>
-<!-- /네비바 -->
-
-
-    <div class="zoo-bg">
-        <div class="clouds">☁️ ☁️ ☁️</div>
-        <div class="trees">🌳 🦒 🌲 🐘 🌴</div>
-    </div>
-
-    <header>
-        <div class="header-title"><span class="paw-icon">🐾</span> 동물 구출 작전 수행</div>
-          </header>
-
-    <main>
-        <div class="display-panel">
-            
-            <div class="game-area-wrap">
-                <canvas id="gameCanvas"></canvas>
-                <div id="cage" class="cage-overlay"></div> 
-            </div>
-            
-            <div id="hud-score-area" class="hud-score hidden">
-                <div class="hud-label">총 구출 점수</div>
-                <div class="hud-value" id="hud-txt-score">0</div>
-            </div>
-
-            <div id="toast">구출 성공! 🎉</div>
-            
-            <div id="screen-standby" class="overlay">
-                <div style="font-size: 5rem; margin-bottom: 10px;">🚁📡</div>
-                <h1 style="color: #2d3436; font-size: 2.2rem;">아프리카 초원 탐사 드론</h1>
-                <div style="background: rgba(255,255,255,0.6); padding: 25px 30px; border-radius: 16px; max-width: 550px; text-align: left; border: 1px solid rgba(0,0,0,0.1); margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
-                    <p style="margin-top: 0; font-size: 1.15rem; font-weight: 800; color: #d63031;">"현재 탐사 드론의 통신 상태가 좋지 않습니다." 📉</p>
-                    <p>대역폭의 제한으로 인해 고화질 원본 사진 대신 <b>'저해상도 비트맵 이미지'</b>로만 수신되고 있습니다.</p>
-                    <p style="margin-bottom: 0;">제한된 데이터(해상도 및 RGB 채널)를 분석하여, 밀렵꾼의 철장에 갇힌 <b>멸종 위기 동물을 식별하고 구출</b>하세요!</p>
-                </div>
-                <button class="btn-submit" style="width: 250px;" onclick="startGame()">▶ 구출 작전 시작</button>
-            </div>
-
-            <div id="screen-over" class="overlay hidden">
-                <h1 id="over-title">작전 종료</h1>
-                <p id="final-stats" style="font-size: 1.3rem; margin-bottom: 20px;"></p>
-                <button class="btn-submit" style="width: 250px;" onclick="location.reload()">처음으로 돌아가기</button>
-            </div>
-        </div>
-
-        <div class="control-panel">
-            <div class="status-board">
-                <div class="status-box">
-                    <div class="status-label">남은 시간</div>
-                    <div class="status-value" id="txt-timer" style="color:var(--accent-red)">01:30</div>
-                </div>
-                <div class="status-box">
-                    <div class="status-label">구출 진행도</div>
-                    <div class="status-value" id="txt-count" style="color:var(--accent-blue)">0/15</div>
-                </div>
-                <div class="status-box">
-                    <div class="status-label">현재 라운드 점수</div>
-                    <div class="status-value" id="txt-current-score" style="color:#009432">0</div>
-                </div>
-            </div>
-
-            <div class="security-alert">
-                🔒 [슬라이더 조작 주의]<br>화질이 좋아질수록 구출 점수는 낮아집니다. #한 번 올린 수치는 되돌릴 수 없으니, 최소한의 정보로 동물을 찾아보세요!
-            </div>
-            
-            <div class="slider-group">
-                <div class="slider-header"><span>해상도 (Resolution)</span><span class="val-display" id="val-res">10</span></div>
-                <input type="range" id="slider-res" min="10" max="120" value="10" oninput="updateSlider('maxRes', this)">
-                <div class="slider-range-labels"><span>10 (최저화질)</span><span>120 (최고화질)</span></div>
-            </div>
-            <div class="slider-group">
-                <div class="slider-header"><span style="color:#d63031">Red 채널</span><span class="val-display" id="val-r" style="color:#d63031">0</span></div>
-                <input type="range" id="slider-r" min="0" max="255" value="0" oninput="updateSlider('maxR', this)">
-                <div class="slider-range-labels"><span>0</span><span>255</span></div>
-            </div>
-            <div class="slider-group">
-                <div class="slider-header"><span style="color:#00b894">Green 채널</span><span class="val-display" id="val-g" style="color:#00b894">0</span></div>
-                <input type="range" id="slider-g" min="0" max="255" value="0" oninput="updateSlider('maxG', this)">
-                <div class="slider-range-labels"><span>0</span><span>255</span></div>
-            </div>
-            <div class="slider-group">
-                <div class="slider-header"><span style="color:#0984e3">Blue 채널</span><span class="val-display" id="val-b" style="color:#0984e3">0</span></div>
-                <input type="range" id="slider-b" min="0" max="255" value="0" oninput="updateSlider('maxB', this)">
-                <div class="slider-range-labels"><span>0</span><span>255</span></div>
-            </div>
-
-            <div class="action-area hidden" id="ui-action">
-                <input type="text" id="input-answer" class="input-box" placeholder="구출할 동물 이름 입력" onkeypress="if(event.key==='Enter') checkAnswer()" autocomplete="off">
-                <button class="btn-submit" onclick="checkAnswer()">✅ 정답 제출</button>
-                
-                <div class="sub-btn-group">
-                    <button class="btn-sub" onclick="skipMission()">⏭️ 스킵</button>
-                    <button class="btn-sub btn-reset" onclick="backToSelect()">🏠 선택 화면으로</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    
-<!-- ══ 벡터 게임 ══ -->
-<div id="game-vector">
-    <div class="vg-topbar">
-        <button class="vg-back" onclick="backToSelect()">← 선택 화면으로</button>
-        <span class="vg-topbar-ttl">📐 이미지의 표현 · 벡터 실습</span>
-    </div>
-    <div class="vg-body">
-        <div class="vg-left">
-            <div class="vg-ttl">📐 벡터 교실 스케치 미션</div>
-            <div class="vg-dsc" id="vg-dsc">SVG 명령어의 빈칸을 채워 교실 그림을 완성하세요!</div>
-            <div class="vg-pg-row">
-                <span class="vg-pg-lbl">진행도</span>
-                <div class="vg-pg-bar"><div class="vg-pg-fill" id="vg-pf"></div></div>
-                <span class="vg-pg-txt" id="vg-pt">0 / 6</span>
-            </div>
-            <div class="vg-sc-row">
-                <div class="vg-sc-box"><div class="vg-sc-num" id="vg-sc">0</div><div class="vg-sc-lbl">점수</div></div>
-                <div class="vg-sc-box"><div class="vg-sc-num" id="vg-cb">x1</div><div class="vg-sc-lbl">콤보</div></div>
-            </div>
-            <div class="vg-card" id="vg-card">
-                <div class="vg-mlbl" id="vg-ml">미션 1 / 6</div>
-                <div class="vg-code" id="vg-cd"></div>
-                <div class="vg-ins" id="vg-ins"></div>
-                <button class="vg-sub" onclick="checkVec()">✅ 확인</button>
-                <div class="vg-hr">
-                    <button class="vg-hbtn" onclick="vgHint()">💡 힌트 (-10점)</button>
-                    <span class="vg-htxt" id="vg-ht"></span>
-                </div>
-            </div>
-            <div class="vg-res" id="vg-res">
-                <div class="vg-ri">🏆</div>
-                <div class="vg-rt" id="vg-rt">교실 완성!</div>
-                <div class="vg-rs" id="vg-rsc">0점</div>
-                <div class="vg-rm">벡터 방식으로 그린 그림은<br>아무리 확대해도 절대 깨지지 않아요!</div>
-                <button class="vg-sub" onclick="vgRst()">🔄 다시 도전</button>
-            </div>
-        </div>
-        <div class="vg-right">
-            <div class="vg-cvs-hd">🖥️ 실시간 렌더링 <span class="vg-cvs-tag">Vector SVG</span></div>
-            <div class="vg-svg-box">
-                <svg id="vg-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" y="0" width="400" height="300" fill="#f5f0e8"/>
-                    <rect x="0" y="240" width="400" height="60" fill="#c8a87a"/>
-                    <rect id="vs-bd" x="60" y="30" width="280" height="0" fill="#2d6a4f" rx="4" opacity="0.2"/>
-                    <rect id="vs-bf" x="55" y="25" width="290" height="0" fill="none" stroke="#8B6914" stroke-width="0" rx="5"/>
-                    <rect id="vs-wn" x="305" y="45" width="0" height="0" fill="#87CEEB" rx="3" opacity="0.2"/>
-                    <rect id="vs-wf" x="302" y="42" width="0" height="0" fill="none" stroke="#8B6914" stroke-width="0" rx="4"/>
-                    <line id="vs-wh" x1="0" y1="0" x2="0" y2="0" stroke="#8B6914" stroke-width="0"/>
-                    <line id="vs-wv" x1="0" y1="0" x2="0" y2="0" stroke="#8B6914" stroke-width="0"/>
-                    <rect id="vs-d1" x="30" y="195" width="0" height="0" fill="#d4956a" rx="3" opacity="0.2"/>
-                    <rect id="vs-d1a" x="35" y="208" width="0" height="0" fill="#b07850"/>
-                    <rect id="vs-d1b" x="58" y="208" width="0" height="0" fill="#b07850"/>
-                    <rect id="vs-d2" x="135" y="195" width="0" height="0" fill="#d4956a" rx="3" opacity="0.2"/>
-                    <rect id="vs-d2a" x="140" y="208" width="0" height="0" fill="#b07850"/>
-                    <rect id="vs-d2b" x="163" y="208" width="0" height="0" fill="#b07850"/>
-                    <text id="vs-tx" x="200" y="90" text-anchor="middle" fill="white" font-size="0" font-family="sans-serif" opacity="0">벡터 그래픽</text>
-                    <rect id="vs-ch" x="40" y="212" width="0" height="0" fill="#e8c49a" rx="2" opacity="0.2"/>
-                    <line id="vs-cb" x1="0" y1="0" x2="0" y2="0" stroke="#b07850" stroke-width="0"/>
-                </svg>
-                <div class="vg-znote">🔍 벡터는 확대해도 절대 깨지지 않아요!</div>
-            </div>
-            <div class="vg-cmp">
-                <div class="vg-cb"><div class="vg-cl">🔲 비트맵 확대시</div><canvas id="vg-bmp" width="120" height="80"></canvas></div>
-                <div class="vg-cm">vs</div>
-                <div class="vg-cb"><div class="vg-cl">📐 벡터 확대시</div>
-                    <svg viewBox="95 25 10 8" width="120" height="80" style="border:2px solid #2d6a4f;border-radius:8px;background:#f5f0e8;display:block;margin:0 auto;">
-                        <rect x="60" y="30" width="280" height="120" fill="#2d6a4f" rx="4"/>
-                        <text x="200" y="97" text-anchor="middle" fill="white" font-size="14" font-family="sans-serif">벡터 그래픽</text>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        const offCanvas = document.createElement('canvas');
-        offCanvas.width = 640; offCanvas.height = 480;
-        
-        let isPlaying = false, clearCount = 0, totalScore = 0, timeLeft = 90;
-        let timerInterval, currentMission, missionQueue = [];
-        const limits = { maxRes: 10, maxR: 0, maxG: 0, maxB: 0 };
-
-        const animals = [
-            { id: 'dog', emoji: '🐶', ans: ['강아지', '개', '멍멍이', 'dog'] },
-            { id: 'cat', emoji: '🐱', ans: ['고양이', '야옹이', '냥이', 'cat'] },
-            { id: 'rabbit', emoji: '🐰', ans: ['토끼', 'rabbit', 'bunny'] },
-            { id: 'fox', emoji: '🦊', ans: ['여우', 'fox'] },
-            { id: 'pig', emoji: '🐷', ans: ['돼지', 'pig'] },
-            { id: 'lion', emoji: '🦁', ans: ['사자', '라이온', 'lion'] },
-            { id: 'monkey', emoji: '🐵', ans: ['원숭이', '잔나비', 'monkey'] },
-            { id: 'panda', emoji: '🐼', ans: ['판다', '팬더', 'panda'] },
-            { id: 'cow', emoji: '🐮', ans: ['소', '황소', '암소', 'cow'] },
-            { id: 'elephant', emoji: '🐘', ans: ['코끼리', '엘리펀트', 'elephant'] },
-            { id: 'tiger', emoji: '🐯', ans: ['호랑이', 'tiger'] },
-            { id: 'giraffe', emoji: '🦒', ans: ['기린', 'giraffe'] },
-            { id: 'bird', emoji: '🐦', ans: ['새', '참새', 'bird'] },
-            { id: 'ostrich', emoji: '🦤', ans: ['타조', '도도새', 'ostrich'] },
-            { id: 'sheep', emoji: '🐑', ans: ['양', 'sheep'] }
-        ];
-
-        function drawAnimal(emoji) {
-            const oCtx = offCanvas.getContext('2d');
-            // 🚨 하얀색을 그리는 대신 기존 내용을 지워서 완벽히 투명하게 만듦
-            oCtx.clearRect(0, 0, 640, 480); 
-            oCtx.font = '280px Arial';
-            oCtx.textAlign = 'center';
-            oCtx.textBaseline = 'middle';
-            oCtx.fillText(emoji, 320, 260); 
-        }
-
-        function updateSlider(key, el) {
-            if (!isPlaying) return; 
-            const val = parseInt(el.value);
-            if (val < limits[key]) el.value = limits[key]; 
-            else limits[key] = val;
-            render();
-        }
-
-        function startGame() {
-            document.getElementById('screen-standby').classList.add('hidden');
-            document.getElementById('ui-action').classList.remove('hidden');
-            document.getElementById('hud-score-area').classList.remove('hidden'); 
-            
-            missionQueue = [...animals].sort(() => Math.random() - 0.5).slice(0, 15);
-            clearCount = 0; totalScore = 0; isPlaying = true;
-            
-            startTimer();
-            loadNext();
-        }
-
-        function startTimer() {
-            clearInterval(timerInterval);
-            timeLeft = 90;
-            updateTimerUI();
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerUI();
-                if (timeLeft <= 0) endGame();
-            }, 1000);
-        }
-
-        function updateTimerUI() {
-            const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-            const s = (timeLeft % 60).toString().padStart(2, '0');
-            document.getElementById('txt-timer').innerText = `${m}:${s}`;
-        }
-
-        function loadNext() {
-            if (missionQueue.length === 0 && clearCount > 0) { endGame(true); return; }
-            if (!isPlaying) return;
-
-            document.getElementById('cage').classList.remove('cage-opened');
-
-            Object.assign(limits, { maxRes: 10, maxR: 0, maxG: 0, maxB: 0 });
-            document.getElementById('slider-res').value = 10;
-            document.getElementById('slider-r').value = 0;
-            document.getElementById('slider-g').value = 0;
-            document.getElementById('slider-b').value = 0;
-
-            currentMission = missionQueue.shift();
-            drawAnimal(currentMission.emoji);
-            document.getElementById('input-answer').value = '';
-            document.getElementById('input-answer').focus();
-            render();
-        }
-
-        function render() {
-            document.getElementById('val-res').innerText = limits.maxRes;
-            document.getElementById('val-r').innerText = limits.maxR;
-            document.getElementById('val-g').innerText = limits.maxG;
-            document.getElementById('val-b').innerText = limits.maxB;
-
-            const roundScore = Math.floor((120 - limits.maxRes) * 5 + (255 - limits.maxR) + (255 - limits.maxG) + (255 - limits.maxB));
-            document.getElementById('txt-current-score').innerText = roundScore;
-
-            const res = limits.maxRes;
-            const temp = document.createElement('canvas');
-            temp.width = res; temp.height = Math.floor(res * 0.75);
-            const tCtx = temp.getContext('2d');
-            tCtx.drawImage(offCanvas, 0, 0, temp.width, temp.height);
-
-            ctx.clearRect(0, 0, 640, 480);
-            ctx.imageSmoothingEnabled = false;
-            ctx.drawImage(temp, 0, 0, temp.width, temp.height, 0, 0, 640, 480);
-
-            let imgData = ctx.getImageData(0, 0, 640, 480);
-            let p = imgData.data;
-            for (let i = 0; i < p.length; i += 4) {
-                // 🚨 투명도가 있는 픽셀(이모지)에만 색상 조절을 적용하여 배경 투명도 유지
-                if (p[i+3] > 0) { 
-                    p[i] = Math.min(p[i], limits.maxR);
-                    p[i+1] = Math.min(p[i+1], limits.maxG);
-                    p[i+2] = Math.min(p[i+2], limits.maxB);
-                }
-            }
-            ctx.putImageData(imgData, 0, 0);
-        }
-
-        function checkAnswer() {
-            const inputEl = document.getElementById('input-answer');
-            const input = inputEl.value.trim();
-            
-            if (currentMission.ans.includes(input)) {
-                clearCount++;
-                const roundScore = Math.floor((120 - limits.maxRes) * 5 + (255 - limits.maxR) + (255 - limits.maxG) + (255 - limits.maxB));
-                totalScore += roundScore;
-                
-                document.getElementById('txt-count').innerText = `${clearCount}/15`;
-                document.getElementById('hud-txt-score').innerText = totalScore;
-                
-                const toast = document.getElementById('toast');
-                toast.style.opacity = 1;
-                setTimeout(() => toast.style.opacity = 0, 1500);
-
-                ctx.imageSmoothingEnabled = true;
-                ctx.clearRect(0, 0, 640, 480); // 원본 그리기 전에 투명화 보장
-                ctx.drawImage(offCanvas, 0, 0, 640, 480);
-                document.getElementById('cage').classList.add('cage-opened');
-                
-                setTimeout(loadNext, 1200); 
-            } else {
-                inputEl.classList.add('error-shake');
-                setTimeout(() => inputEl.classList.remove('error-shake'), 400);
-            }
-        }
-
-        function skipMission() { missionQueue.push(currentMission); loadNext(); }
-
-        function endGame(isClear = false) {
-            isPlaying = false;
-            clearInterval(timerInterval);
-            document.getElementById('screen-over').classList.remove('hidden');
-            document.getElementById('hud-score-area').classList.add('hidden'); 
-            const stats = document.getElementById('final-stats');
-            if (isClear) {
-                document.getElementById('over-title').innerText = "MISSION COMPLETE!";
-                stats.innerHTML = `15마리의 동물을 모두 구출했습니다.<br>최종 획득 점수: <span style="font-size:3rem; color:#009432; font-weight:900;">${totalScore}</span>`;
-            } else {
-                stats.innerHTML = `시간이 초과되었습니다.<br>구출 성공: ${clearCount}/15<br>최종 획득 점수: ${totalScore}`;
-            }
-        }
-
-        function setStatus(type) {
-            const body = document.getElementById('mainBody');
-            body.style.boxShadow = 'none';
-            if (type === 'sos') body.style.boxShadow = 'inset 0 0 0 20px var(--accent-red)';
-            if (type === 'done') body.style.boxShadow = 'inset 0 0 0 20px #009432';
-        }
-
-        canvas.width = 640; canvas.height = 480;
-    
-        // ══ 화면 전환 ══
-        function enterGame(type) {
-            document.getElementById('screen-select').style.display = 'none';
-            if (type === 'bitmap') {
-                document.getElementById('screen-select').style.display = 'none';
-            } else {
-                document.getElementById('game-vector').style.display = 'flex';
-                initVec();
-            }
-        }
-        function backToSelect() {
-            document.getElementById('game-vector').style.display = 'none';
-            document.getElementById('screen-select').style.display = 'flex';
-            // 비트맵 게임 상태 초기화
-            if (typeof isPlaying !== 'undefined' && isPlaying) {
-                clearInterval(timerInterval);
-                isPlaying = false;
-            }
-        }
-
-        // ══ 벡터 게임 데이터 ══
-        const VMS = [
-            { ttl:'칠판 그리기', dsc:'교실 앞 칠판을 SVG rect로 그려보세요.',
-              code:`&lt;rect x="60" y="30"
-  width="<span class='vg-blank' id='c0'>?</span>" height="<span class='vg-blank' id='c1'>?</span>"
-  fill="#2d6a4f" rx="4"/&gt;`,
-              ins:[{l:'width',id:'i0',a:280,h:'60에서→340까지 = ?',r:[200,320]},{l:'height',id:'i1',a:120,h:'30에서→150까지 = ?',r:[80,150]}],
-              ap(v){ vs('vg-svg',''); const b=g('vs-bd'); b.setAttribute('width',v[0]); b.setAttribute('height',v[1]); b.setAttribute('opacity','1');
-                     const f=g('vs-bf'); f.setAttribute('width',v[0]+10); f.setAttribute('height',v[1]+10); f.setAttribute('stroke-width','4'); }
-            },
-            { ttl:'창문 그리기', dsc:'오른쪽 벽의 창문을 그려보세요.',
-              code:`&lt;rect x="305" y="45"
-  width="<span class='vg-blank' id='c0'>?</span>" height="<span class='vg-blank' id='c1'>?</span>"
-  fill="#87CEEB" rx="3"/&gt;`,
-              ins:[{l:'width',id:'i0',a:65,h:'305→370, 약 65',r:[45,85]},{l:'height',id:'i1',a:85,h:'45→130, 약 85',r:[55,110]}],
-              ap(v){ const w=g('vs-wn'); w.setAttribute('width',v[0]); w.setAttribute('height',v[1]); w.setAttribute('opacity','1');
-                     const f=g('vs-wf'); f.setAttribute('width',v[0]+6); f.setAttribute('height',v[1]+6); f.setAttribute('stroke-width','3');
-                     const cx=305+v[0]/2, cy=45+v[1]/2;
-                     const h=g('vs-wh'); h.setAttribute('x1',305); h.setAttribute('y1',cy); h.setAttribute('x2',305+v[0]); h.setAttribute('y2',cy); h.setAttribute('stroke-width','2');
-                     const vl=g('vs-wv'); vl.setAttribute('x1',cx); vl.setAttribute('y1',45); vl.setAttribute('x2',cx); vl.setAttribute('y2',45+v[1]); vl.setAttribute('stroke-width','2'); }
-            },
-            { ttl:'첫 번째 책상', dsc:'앞줄 첫 번째 책상 상판을 그려보세요.',
-              code:`&lt;rect x="30" y="195"
-  width="<span class='vg-blank' id='c0'>?</span>" height="<span class='vg-blank' id='c1'>?</span>"
-  fill="#d4956a" rx="3"/&gt;`,
-              ins:[{l:'width',id:'i0',a:80,h:'책상 폭 약 80',r:[55,100]},{l:'height',id:'i1',a:10,h:'상판 두께 8~12',r:[6,16]}],
-              ap(v){ const d=g('vs-d1'); d.setAttribute('width',v[0]); d.setAttribute('height',v[1]); d.setAttribute('opacity','1');
-                     [g('vs-d1a'),g('vs-d1b')].forEach(l=>{l.setAttribute('width',5);l.setAttribute('height',22);}); }
-            },
-            { ttl:'두 번째 책상', dsc:'두 번째 책상도 같은 방식으로!',
-              code:`&lt;rect x="135" y="195"
-  width="<span class='vg-blank' id='c0'>?</span>" height="<span class='vg-blank' id='c1'>?</span>"
-  fill="#d4956a" rx="3"/&gt;`,
-              ins:[{l:'width',id:'i0',a:80,h:'첫 번째와 동일!',r:[55,100]},{l:'height',id:'i1',a:10,h:'첫 번째와 동일',r:[6,16]}],
-              ap(v){ const d=g('vs-d2'); d.setAttribute('width',v[0]); d.setAttribute('height',v[1]); d.setAttribute('opacity','1');
-                     [g('vs-d2a'),g('vs-d2b')].forEach(l=>{l.setAttribute('width',5);l.setAttribute('height',22);}); }
-            },
-            { ttl:'칠판에 글씨 쓰기', dsc:'칠판 중앙에 텍스트 크기를 설정해요.',
-              code:`&lt;text x="200" y="90"
-  font-size="<span class='vg-blank' id='c0'>?</span>"
-  fill="white"&gt;벡터 그래픽&lt;/text&gt;`,
-              ins:[{l:'font-size',id:'i0',a:20,h:'18~22 사이로',r:[12,30]}],
-              ap(v){ const t=g('vs-tx'); t.setAttribute('font-size',v[0]); t.setAttribute('opacity','1'); }
-            },
-            { ttl:'의자 그리기', dsc:'마지막! 첫 번째 책상 앞 의자를 완성하세요.',
-              code:`&lt;rect x="40" y="212"
-  width="<span class='vg-blank' id='c0'>?</span>" height="<span class='vg-blank' id='c1'>?</span>"
-  fill="#e8c49a" rx="2"/&gt;`,
-              ins:[{l:'width',id:'i0',a:55,h:'책상보다 작게 48~62',r:[38,72]},{l:'height',id:'i1',a:9,h:'얇게 7~12',r:[5,15]}],
-              ap(v){ const c=g('vs-ch'); c.setAttribute('width',v[0]); c.setAttribute('height',v[1]); c.setAttribute('opacity','1');
-                     const b=g('vs-cb'); b.setAttribute('x1',50); b.setAttribute('y1',212); b.setAttribute('x2',50); b.setAttribute('y2',200); b.setAttribute('stroke-width','5'); }
-            }
-        ];
-
-        function g(id){ return document.getElementById(id); }
-        function vs(id,attr,val){ const e=g(id); if(e&&attr) e.setAttribute(attr,val); }
-
-        let vI=0, vSc=0, vCo=1;
-
-        function initVec(){
-            vI=0; vSc=0; vCo=1;
-            g('vg-sc').textContent='0'; g('vg-cb').textContent='x1';
-            g('vg-pf').style.width='0%'; g('vg-pt').textContent='0 / 6';
-            g('vg-res').style.display='none'; g('vg-card').style.display='flex';
-            ['vs-bd','vs-bf','vs-wn','vs-wf','vs-d1','vs-d1a','vs-d1b','vs-d2','vs-d2a','vs-d2b','vs-tx','vs-ch','vs-cb'].forEach(id=>{
-                const el=g(id); if(!el) return;
-                ['width','height','font-size','stroke-width'].forEach(a=>el.setAttribute(a,'0'));
-                if(['rect','text'].includes(el.tagName)) el.setAttribute('opacity','0.2');
-            });
-            // 비트맵 비교 캔버스
-            const cv=g('vg-bmp'); if(cv){ const ctx=cv.getContext('2d'); const t=document.createElement('canvas'); t.width=8; t.height=6; const tc=t.getContext('2d'); tc.fillStyle='#2d6a4f'; tc.fillRect(0,0,8,6); tc.fillStyle='#a8ff78'; tc.font='3px sans-serif'; tc.fillText('AB',1,4); ctx.imageSmoothingEnabled=false; ctx.drawImage(t,0,0,120,80); }
-            loadVec(0);
-        }
-
-        function loadVec(idx){
-            const m=VMS[idx];
-            g('vg-ml').textContent=`미션 ${idx+1} / ${VMS.length}`;
-            g('vg-dsc').textContent=m.dsc;
-            g('vg-cd').innerHTML=m.code;
-            g('vg-ht').textContent='';
-            const div=g('vg-ins'); div.innerHTML='';
-            m.ins.forEach(inp=>{
-                const w=document.createElement('div');
-                w.style.cssText='display:flex;flex-direction:column;gap:4px;flex:1;min-width:75px;';
-                w.innerHTML=`<label style="font-size:0.7rem;font-weight:800;color:#636e72;">${inp.l}</label><input type="number" id="${inp.id}" class="vg-in" placeholder="?" min="${inp.r[0]}" max="${inp.r[1]}" onkeypress="if(event.key==='Enter')checkVec()">`;
-                div.appendChild(w);
-            });
-            g('vg-pf').style.width=(idx/VMS.length*100).toFixed(0)+'%';
-            g('vg-pt').textContent=`${idx} / ${VMS.length}`;
-        }
-
-        function checkVec(){
-            const m=VMS[vI]; let ok=true; const vals=[];
-            m.ins.forEach(inp=>{
-                const el=g(inp.id); const val=parseInt(el.value)||0;
-                const tol=Math.round(inp.a*0.13);
-                if(Math.abs(val-inp.a)<=tol){ el.classList.add('ok'); el.classList.remove('ng'); vals.push(val); }
-                else{ el.classList.add('ng'); el.classList.remove('ok'); setTimeout(()=>el.classList.remove('ng'),500); ok=false; vals.push(val); }
-            });
-            if(ok){
-                m.ap(vals);
-                const earned=(50+Math.round(40/m.ins.length))*vCo;
-                vSc+=earned; vCo=Math.min(vCo+1,4);
-                g('vg-sc').textContent=vSc; g('vg-cb').textContent=`x${vCo}`;
-                m.ins.forEach((_,i)=>{ const cb=g(`c${i}`); if(cb){cb.textContent=vals[i];cb.style.color='#a8ff78';cb.style.borderColor='rgba(168,255,120,0.8)';} });
-                vI++;
-                g('vg-pf').style.width=(vI/VMS.length*100).toFixed(0)+'%';
-                g('vg-pt').textContent=`${vI} / ${VMS.length}`;
-                setTimeout(()=>{ if(vI>=VMS.length) showVRes(); else loadVec(vI); },700);
-            } else { vCo=1; g('vg-cb').textContent='x1'; }
-        }
-
-        function vgHint(){ vSc=Math.max(0,vSc-10); g('vg-sc').textContent=vSc; g('vg-ht').textContent='💡 '+VMS[vI].ins.map(i=>i.h).join(' / '); }
-
-        function showVRes(){
-            g('vg-card').style.display='none';
-            const rp=g('vg-res'); rp.style.display='flex';
-            g('vg-pf').style.width='100%'; g('vg-pt').textContent='6 / 6';
-            g('vg-rsc').textContent=vSc+'점';
-            g('vg-rt').textContent=vSc>=300?'🏆 완벽한 스케치!':vSc>=180?'🎉 교실 완성!':'✅ 미션 클리어!';
-        }
-
-        function vgRst(){ initVec(); }
-
-</script>
 
 </body>
 </html>
