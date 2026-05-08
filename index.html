@@ -123,23 +123,104 @@
 
         .header-left { display: flex; align-items: center; gap: 18px; }
 
-        .badge-target {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
-            padding: 4px 10px; border-radius: 4px;
-            background: rgba(0,245,196,0.1);
-            border: 1px solid rgba(0,245,196,0.3);
-            color: var(--mint);
+       .badge-target {
+            font-family: 'JetBrains Mono', 'Orbitron', monospace;
+            font-size: 0.7rem; 
+            font-weight: 800; /* 입체감을 위해 글씨를 더 두껍게 */
+            letter-spacing: 2px;
+            padding: 5px 12px; 
+            border-radius: 6px;
+            
+            /* 어두운 배경에 어울리는 투명한 골드 바탕 */
+            background: rgba(255, 214, 10, 0.15);
+            border: 1px solid rgba(255, 214, 10, 0.4);
+            color: #ffd60a; /* 밝은 노란색 */
+            
+    
+            /* 박스 자체의 입체감 추가 */
+            box-shadow: 
+                inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                0 4px 10px rgba(0, 0, 0, 0.6);
+                
             text-transform: uppercase;
         }
 
-        .site-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.2rem; font-weight: 900; letter-spacing: 0.05em;
-            color: var(--white);
-            text-shadow: 0 0 30px rgba(0,245,196,0.4);
+ .site-title {
+            font-family: 'Orbitron', 'Noto Sans KR', sans-serif;
+            font-size: 1.3rem; 
+            font-weight: 900; 
+            letter-spacing: 0.05em;
+            display: inline-block;
+            
+            /* ⭐ [통일된 색상 & 가독성] 
+               배경과 가장 대비되면서도 신비로운 '초강력 민트 화이트'로 통일 
+               글씨 자체가 불을 뿜는 것처럼 보이게 합니다. */
+            color: #ffffff;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+
+            /* ⭐ [신기한 3D 입체감] 
+               그라데이션 대신 날카롭고 깊은 '사이버 블루' 입체 그림자를 넣어 
+               글자가 화면 밖으로 튀어나온 것처럼 만듭니다. */
+            text-shadow: 
+                0 1px 0 #0a84ff, 
+                0 2px 0 #0a84ff, 
+                0 3px 0 #005bb5, 
+                0 4px 0 #005bb5, 
+                0 5px 0 #005bb5,
+                /* 은은하게 퍼지는 민트색 네온 글로우 */
+                0 0 15px rgba(0, 245, 196, 0.7);
+                
+            /* ⭐ [천천히 움직이는 신비로움] 
+               3D 입체의 깊이와 글로우의 강도가 아주 천천히 박동하는 애니메이션 */
+            animation: mysterious3DPulse 5s ease-in-out infinite alternate;
         }
-        .site-title span { color: var(--mint); }
+
+        /* ⭐ span 태그도 전체 텍스트와 동일한 색상과 입체감을 타도록 초기화 */
+        .site-title span { 
+            color: inherit;
+            font-weight: inherit;
+            background: inherit;
+            -webkit-background-clip: inherit;
+            background-clip: inherit;
+            filter: inherit;
+            animation: inherit;
+            text-shadow: inherit;
+        }
+
+        /* 호버 효과 제거 (user가 타이틀에 마우스 올릴 일이 없다고 하셨으므로) */
+        .site-title:hover {
+            transform: none;
+            animation-play-state: running; 
+        }
+
+        /* ⭐ [느릿하고 신비로운 3D 박동 애니메이션]
+           글자가 아주 천천히 앞으로 나왔다가 들어가는 듯한 착시를 줍니다. */
+        @keyframes mysterious3DPulse {
+            0% { 
+                transform: scale(1) translateY(0px);
+                text-shadow: 
+                    0 1px 0 #0a84ff, 
+                    0 2px 0 #0a84ff, 
+                    0 3px 0 #005bb5, 
+                    0 4px 0 #005bb5, 
+                    0 5px 0 #005bb5,
+                    0 0 15px rgba(0, 245, 196, 0.7);
+            }
+            100% { 
+                /* 살짝 커지면서 입체 그림자가 깊어짐 */
+                transform: scale(1.03) translateY(-3px); 
+                text-shadow: 
+                    0 1px 0 #0a84ff, 
+                    0 2px 0 #0a84ff, 
+                    0 4px 0 #005bb5, /* 깊어짐 */
+                    0 5px 0 #005bb5, /* 깊어짐 */
+                    0 6px 0 #003366, /* 아주 깊어짐 */
+                    /* 글로우가 폭발하듯 강해짐 */
+                    0 0 25px rgba(0, 245, 196, 1);
+            }
+        }
 
         .reset-btn {
             font-family: 'JetBrains Mono', monospace;
@@ -722,8 +803,8 @@
 <header>
     <div class="header-main">
         <div class="header-left">
-            <span class="badge-target">▸ 중학교 1–3학년</span>
-            <h1 class="site-title">0과 1의 하모니 'DATA <span>BITBOX'</span></h1>
+            <span class="badge-target">중학교 1–3학년</span>
+            <h1 class="site-title">0과 1의 하모니 '데이터 <span>비트박스'</span></h1>
         </div>
         <button class="reset-btn" onclick="openResetModal()">⟳ 전체 초기화</button>
     </div>
@@ -818,7 +899,7 @@
                     <a class="step-item" href="이미지_개념.html" data-step="5">
                         <div class="step-left">
                             <span class="step-num">STEP 5</span>
-                            이미지의 표현
+                            이미지의 디지털 표현
                             <span class="done-badge">✓ DONE</span>
                         </div>
                         <span class="step-arrow">▶</span>
@@ -828,7 +909,7 @@
                     <a class="step-item" href="소리_개념.html" data-step="6">
                         <div class="step-left">
                             <span class="step-num">STEP 6</span>
-                            소리의 표현
+                            소리의 디지털 표현
                             <span class="done-badge">✓ DONE</span>
                         </div>
                         <span class="step-arrow">▶</span>
@@ -838,7 +919,7 @@
                     <a class="step-item navy-step" href="동영상_개념.html" data-step="7">
                         <div class="step-left">
                             <span class="step-num">STEP 7</span>
-                            동영상의 표현
+                            동영상의 디지털 표현
                             <span class="done-badge">✓ DONE</span>
                         </div>
                         <span class="step-arrow">▶</span>
